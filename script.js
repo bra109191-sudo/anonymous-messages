@@ -61,11 +61,12 @@ form.reset();
 showStatus("💌 تم إرسال رسالتك بنجاح!", true);
 
 } catch (error) {
-console.error("Message submission failed:", error);
-showStatus(
-"تعذر إرسال الرسالة. يرجى المحاولة مرة أخرى لاحقًا.",
-false
-);
+  console.error("Message submission failed:", error);
+
+  showStatus(
+    "خطأ الإرسال: " + (error.message || "خطأ غير معروف"),
+    false
+  );
 
 } finally {
 sendButton.disabled = false;
