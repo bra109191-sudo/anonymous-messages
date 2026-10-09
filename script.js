@@ -1,6 +1,6 @@
 "use strict";
 
-const SUPABASE_URL = "https://kgzvbmzxfkqasqouwfck.supabase.co/rest/v1/";
+const SUPABASE_URL = "https://kgzvbmzxfkqasqouwfck.supabase.co";
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtnenZibXp4ZmtxYXNxb3V3ZmNrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE1NDE2NjEsImV4cCI6MjEwNzExNzY2MX0.56Cr35qUjB-O3vIxoqq6PGrLyGgOGyIjbXXRrVljNcc";
 
 const db = window.supabase.createClient(
