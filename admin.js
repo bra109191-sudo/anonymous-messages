@@ -1,14 +1,14 @@
 "use strict";
 
 const SUPABASE_URL = "https://kgzvbmzxfkqasqouwfck.supabase.co";
-
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtnenZibXp4ZmtxYXNxb3V3ZmNrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE1NDE2NjEsImV4cCI6MjEwNzExNzY2MX0.56Cr35qUjB-O3vIxoqq6PGrLyGgOGyIjbXXRrVljNcc";
 
+// معرّف حساب المدير المسموح له بمشاهدة الرسائل وحذفها
 const ADMIN_UID = "56871111-b511-41f2-86e3-e86d98ad9837";
 
 const db = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
+SUPABASE_URL,
+SUPABASE_KEY
 );
 
 const loginCard = document.getElementById("loginCard");
