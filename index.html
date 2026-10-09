@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#100d1b">
+  <title>رسالة من مجهول 💌</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Cairo', sans-serif;
+      background:
+        radial-gradient(ellipse at top, #34204d 0%, transparent 55%),
+        #100d1b;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 470px;
+      animation: appear .7s ease both;
+    }
+
+    .logo {
+      width: 78px;
+      height: 78px;
+      margin: 0 auto 18px;
+      border: 1px solid rgba(224, 183, 255, .35);
+      border-radius: 25px;
+      display: grid;
+      place-items: center;
+      font-size: 38px;
+      background: rgba(255, 255, 255, .07);
+      box-shadow: 0 12px 45px rgba(152, 74, 255, .17);
+      transform: rotate(-5deg);
+    }
+
+    h1 {
+      margin: 0;
+      text-align: center;
+      font-size: clamp(27px, 6vw, 35px);
+      font-weight: 800;
+      letter-spacing: -.7px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #bdb2ce;
+      line-height: 1.9;
+      font-size: 14px;
+      margin: 10px 0 26px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, .055);
+      border: 1px solid rgba(255, 255, 255, .12);
+      border-radius: 25px;
+      padding: 25px 21px;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, .22);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .field {
+      margin-bottom: 19px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: #eee4fa;
+      margin-bottom: 9px;
+    }
+
+    input, textarea {
+      width: 100%;
+      border: 1px solid rgba(255, 255, 255, .12);
+      outline: none;
+      border-radius: 14px;
+      padding: 14px;
+      background: rgba(9, 7, 16, .55);
+      color: #fff;
+      font: inherit;
+      font-size: 14px;
+      transition: border-color .2s, box-shadow .2s;
+    }
+
+    input:focus, textarea:focus {
+      border-color: #c18aff;
+      box-shadow: 0 0 0 3px rgba(193, 138, 255, .1);
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: #80758f;
+    }
+
+    textarea {
+      min-height: 135px;
+      resize: vertical;
+      line-height: 1.9;
+    }
+
+    .privacy {
+      font-size: 11px;
+      color: #bdb2ce;
+      line-height: 1.9;
+      margin: -2px 0 18px;
+    }
+
+    button {
+      width: 100%;
+      border: 0;
+      border-radius: 14px;
+      padding: 15px;
+      background: linear-gradient(110deg, #bd83f4, #8953cf);
+      color: #160b24;
+      font: inherit;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 9px 25px rgba(157, 91, 225, .2);
+      transition: transform .2s, filter .2s;
+    }
+
+    button:hover {
+      filter: brightness(1.08);
+      transform: translateY(-2px);
+    }
+
+    button:disabled {
+      opacity: .65;
+      cursor: wait;
+      transform: none;
+    }
+
+    #status {
+      display: none;
+      padding: 12px;
+      border-radius: 12px;
+      margin-top: 15px;
+      text-align: center;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .footer {
+      text-align: center;
+      color: #80758f;
+      font-size: 11px;
+      margin-top: 21px;
+    }
+
+    @keyframes appear {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 380px) {
+      .card { padding: 21px 16px; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <div class="logo">💌</div>
+
+    <h1>رسالة من مجهول</h1>
+    <p class="subtitle">
+      أحيانًا هناك كلام لا نستطيع قوله مباشرة...<br>
+      اكتب رسالتك وعبّر عمّا بداخلك.
+    </p>
+
+    <form class="card" id="messageForm">
+      <div class="field">
+        <label for="sender">اسمك *</label>
+        <input id="sender" name="sender" maxlength="80"
+          placeholder="اكتب اسمك" required autocomplete="name">
+      </div>
+
+      <div class="field">
+        <label for="recipient">اسم الشخص المستهدف *</label>
+        <input id="recipient" name="recipient" maxlength="80"
+          placeholder="لمن تريد إرسال الرسالة؟" required>
+      </div>
+
+      <div class="field">
+        <label for="message">رسالتك *</label>
+        <textarea id="message" name="message" maxlength="3000"
+          placeholder="اكتب رسالتك هنا بكل صراحة..." required></textarea>
+      </div>
+
+      <p class="privacy">
+        لن يضهر اسمك لاي شخص انت مجهول لاكن خانة الاسم اجبارية للموقع
+      </p>
+
+      <button id="sendButton" type="submit">💌 إرسال الرسالة</button>
+      <div id="status" role="status" aria-live="polite"></div>
+    </form>
+
+    <div class="footer">رسالة من مجهول · مساحة للتعبير بكل احترام</div>
+  </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="script.js"></script>
+</body>
+</html>
