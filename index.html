@@ -1,76 +1,219 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<!DOCTYPE html><html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#100d1b">
-  <title>رسالة من مجهول 💌</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <meta name="theme-color" content="#090810">
+  <meta name="description" content="مساحة للتعبير عن مشاعرك وإرسال رسالتك بكل احترام.">
+  <title>رسالة من مجهول 💌</title>  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #090810;
+      --panel: rgba(24, 20, 38, .76);
+      --purple: #a970ff;
+      --purple-light: #d2adff;
+      --text: #f8f5ff;
+      --muted: #aaa0bd;
+      --border: rgba(218, 190, 255, .14);
+    }
 
-  <style>
     * {
       box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100%;
+      scroll-behavior: smooth;
     }
 
     body {
       margin: 0;
       min-height: 100vh;
-      font-family: 'Cairo', sans-serif;
-      background:
-        radial-gradient(ellipse at top, #34204d 0%, transparent 55%),
-        #100d1b;
-      color: #fff;
+      min-height: 100dvh;
+      padding: 44px 18px 24px;
       display: flex;
-      align-items: center;
       justify-content: center;
-      padding: 24px 16px;
+      align-items: center;
+      overflow-x: hidden;
+      position: relative;
+      isolation: isolate;
+      font-family: "Cairo", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse at 50% -15%, rgba(116, 55, 191, .25), transparent 55%),
+        radial-gradient(ellipse at 100% 65%, rgba(91, 46, 160, .10), transparent 40%),
+        var(--bg);
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: .23;
+      pointer-events: none;
+      z-index: -1;
+      animation: floatGlow 12s ease-in-out infinite alternate;
+    }
+
+    body::before {
+      top: 8%;
+      right: -190px;
+      background: #8038ed;
+    }
+
+    body::after {
+      bottom: 4%;
+      left: -200px;
+      background: #4d38c9;
+      animation-delay: -5s;
     }
 
     .container {
       width: 100%;
-      max-width: 470px;
-      animation: appear .7s ease both;
+      max-width: 460px;
+      margin: auto;
+      animation: enter .8s cubic-bezier(.2, .7, .2, 1) both;
+    }
+
+    .brand {
+      text-align: center;
+      margin-bottom: 26px;
+    }
+
+    .logo-wrap {
+      width: 88px;
+      height: 88px;
+      position: relative;
+      margin: 0 auto 22px;
+      display: grid;
+      place-items: center;
+    }
+
+    .logo-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 29px;
+      background: linear-gradient(145deg, rgba(197, 149, 255, .24), rgba(111, 58, 180, .04));
+      border: 1px solid rgba(219, 185, 255, .3);
+      box-shadow:
+        0 0 40px rgba(145, 77, 240, .13),
+        inset 0 1px rgba(255, 255, 255, .12);
+      transform: rotate(-7deg);
+      animation: logoFloat 5s ease-in-out infinite;
     }
 
     .logo {
-      width: 78px;
-      height: 78px;
-      margin: 0 auto 18px;
-      border: 1px solid rgba(224, 183, 255, .35);
-      border-radius: 25px;
-      display: grid;
-      place-items: center;
-      font-size: 38px;
-      background: rgba(255, 255, 255, .07);
-      box-shadow: 0 12px 45px rgba(152, 74, 255, .17);
-      transform: rotate(-5deg);
+      position: relative;
+      font-size: 39px;
+      filter: drop-shadow(0 5px 15px rgba(178, 119, 255, .35));
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 6px 13px;
+      margin-bottom: 12px;
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      background: rgba(255, 255, 255, .035);
+      color: var(--purple-light);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .3px;
+    }
+
+    .eyebrow-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #bb91ff;
+      box-shadow: 0 0 10px #a970ff;
     }
 
     h1 {
       margin: 0;
-      text-align: center;
-      font-size: clamp(27px, 6vw, 35px);
+      font-size: clamp(29px, 7vw, 37px);
+      line-height: 1.5;
       font-weight: 800;
       letter-spacing: -.7px;
     }
 
+    h1 span {
+      color: var(--purple-light);
+      text-shadow: 0 0 28px rgba(169, 112, 255, .24);
+    }
+
     .subtitle {
-      text-align: center;
-      color: #bdb2ce;
-      line-height: 1.9;
-      font-size: 14px;
-      margin: 10px 0 26px;
+      max-width: 340px;
+      margin: 10px auto 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 2;
     }
 
     .card {
-      background: rgba(255, 255, 255, .055);
-      border: 1px solid rgba(255, 255, 255, .12);
+      position: relative;
+      overflow: hidden;
+      padding: 26px 23px 23px;
+      border: 1px solid var(--border);
       border-radius: 25px;
-      padding: 25px 21px;
-      box-shadow: 0 24px 70px rgba(0, 0, 0, .22);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, .045), transparent 45%),
+        var(--panel);
+      box-shadow:
+        0 28px 80px rgba(0, 0, 0, .38),
+        inset 0 1px rgba(255, 255, 255, .055);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 12%;
+      width: 76%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(210, 173, 255, .75), transparent);
+    }
+
+    .card-heading {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .heading-icon {
+      width: 43px;
+      height: 43px;
+      flex: 0 0 43px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      border: 1px solid rgba(190, 145, 255, .2);
+      background: rgba(154, 91, 238, .12);
+      font-size: 21px;
+    }
+
+    .card-heading h2 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .card-heading p {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 11px;
     }
 
     .field {
@@ -79,142 +222,370 @@
 
     label {
       display: block;
-      font-size: 13px;
-      font-weight: 700;
-      color: #eee4fa;
       margin-bottom: 9px;
+      color: #e9e0f7;
+      font-size: 12px;
+      font-weight: 700;
     }
 
-    input, textarea {
+    .input-wrap {
+      position: relative;
+    }
+
+    .field-icon {
+      position: absolute;
+      top: 50%;
+      right: 14px;
+      transform: translateY(-50%);
+      font-size: 16px;
+      opacity: .75;
+      pointer-events: none;
+    }
+
+    input,
+    textarea {
       width: 100%;
-      border: 1px solid rgba(255, 255, 255, .12);
-      outline: none;
+      border: 1px solid rgba(255, 255, 255, .095);
       border-radius: 14px;
-      padding: 14px;
-      background: rgba(9, 7, 16, .55);
-      color: #fff;
-      font: inherit;
-      font-size: 14px;
-      transition: border-color .2s, box-shadow .2s;
+      outline: none;
+      background: rgba(8, 7, 15, .62);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 13px;
+      transition:
+        border-color .25s ease,
+        box-shadow .25s ease,
+        background .25s ease;
     }
 
-    input:focus, textarea:focus {
-      border-color: #c18aff;
-      box-shadow: 0 0 0 3px rgba(193, 138, 255, .1);
-    }
-
-    input::placeholder, textarea::placeholder {
-      color: #80758f;
+    input {
+      min-height: 52px;
+      padding: 13px 43px 13px 14px;
     }
 
     textarea {
-      min-height: 135px;
+      display: block;
+      min-height: 145px;
+      padding: 14px;
+      line-height: 2;
       resize: vertical;
-      line-height: 1.9;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #756c86;
+      opacity: 1;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: rgba(185, 135, 255, .85);
+      background: rgba(13, 9, 24, .9);
+      box-shadow:
+        0 0 0 3px rgba(169, 112, 255, .10),
+        0 0 22px rgba(137, 75, 218, .08);
+    }
+
+    input:focus-visible,
+    textarea:focus-visible,
+    button:focus-visible {
+      outline: 2px solid var(--purple-light);
+      outline-offset: 3px;
     }
 
     .privacy {
-      font-size: 11px;
-      color: #bdb2ce;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin: 1px 0 21px;
+      padding: 12px;
+      border: 1px solid rgba(185, 145, 255, .11);
+      border-radius: 13px;
+      background: rgba(143, 91, 215, .065);
+      color: #bcb0cf;
+      font-size: 10px;
       line-height: 1.9;
-      margin: -2px 0 18px;
     }
 
-    button {
+    .privacy-icon {
+      flex: 0 0 auto;
+      font-size: 16px;
+      margin-top: 1px;
+    }
+
+    .privacy strong {
+      color: #dfc9ff;
+    }
+
+    .send-button {
       width: 100%;
-      border: 0;
-      border-radius: 14px;
-      padding: 15px;
-      background: linear-gradient(110deg, #bd83f4, #8953cf);
-      color: #160b24;
-      font: inherit;
-      font-size: 15px;
+      min-height: 54px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, .22);
+      border-radius: 15px;
+      padding: 14px 18px;
+      background: linear-gradient(110deg, #d0a7ff 0%, #ad78f3 45%, #8853d2 100%);
+      color: #170d25;
+      font-family: inherit;
+      font-size: 14px;
       font-weight: 800;
       cursor: pointer;
-      box-shadow: 0 9px 25px rgba(157, 91, 225, .2);
-      transition: transform .2s, filter .2s;
+      box-shadow:
+        0 10px 28px rgba(139, 77, 211, .23),
+        inset 0 1px rgba(255, 255, 255, .4);
+      transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
     }
 
-    button:hover {
-      filter: brightness(1.08);
+    .send-button::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -70%;
+      width: 45%;
+      height: 200%;
+      transform: rotate(25deg);
+      background: rgba(255, 255, 255, .24);
+      transition: left .6s ease;
+    }
+
+    .send-button:hover::before {
+      left: 130%;
+    }
+
+    .send-button:hover {
       transform: translateY(-2px);
+      filter: brightness(1.05);
+      box-shadow:
+        0 14px 34px rgba(139, 77, 211, .32),
+        inset 0 1px rgba(255, 255, 255, .4);
     }
 
-    button:disabled {
-      opacity: .65;
+    .send-button:active {
+      transform: scale(.985);
+    }
+
+    .send-button:disabled {
+      opacity: .7;
       cursor: wait;
       transform: none;
+      filter: none;
+    }
+
+    .button-icon {
+      font-size: 18px;
+      transition: transform .25s ease;
+    }
+
+    .send-button:hover .button-icon {
+      transform: translateX(-3px) rotate(-8deg);
     }
 
     #status {
       display: none;
-      padding: 12px;
+      padding: 12px 13px;
+      border: 1px solid transparent;
       border-radius: 12px;
       margin-top: 15px;
       text-align: center;
-      font-size: 13px;
-      line-height: 1.8;
+      font-size: 12px;
+      line-height: 1.9;
+      animation: enter .3s ease both;
     }
 
     .footer {
+      padding: 22px 8px 0;
       text-align: center;
-      color: #80758f;
-      font-size: 11px;
-      margin-top: 21px;
     }
 
-    @keyframes appear {
-      from { opacity: 0; transform: translateY(18px); }
-      to { opacity: 1; transform: translateY(0); }
+    .footer-line {
+      width: 55px;
+      height: 1px;
+      margin: 0 auto 13px;
+      background: linear-gradient(90deg, transparent, rgba(192, 151, 255, .55), transparent);
+    }
+
+    .footer p {
+      margin: 0;
+      color: #81778f;
+      font-size: 10px;
+      line-height: 2;
+    }
+
+    .footer .heart {
+      color: #bd8bff;
+    }
+
+    @keyframes enter {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes floatGlow {
+      from { transform: translate3d(0, -10px, 0) scale(.95); }
+      to { transform: translate3d(0, 25px, 0) scale(1.12); }
+    }
+
+    @keyframes logoFloat {
+      0%, 100% { transform: rotate(-7deg) translateY(0); }
+      50% { transform: rotate(-3deg) translateY(-4px); }
+    }
+
+    @media (min-width: 700px) {
+      body {
+        padding-top: 55px;
+        padding-bottom: 40px;
+      }
+
+      .container {
+        max-width: 475px;
+      }
+
+      .card {
+        padding: 29px 27px 26px;
+      }
     }
 
     @media (max-width: 380px) {
-      .card { padding: 21px 16px; }
+      body {
+        padding: 28px 12px 20px;
+      }
+
+      .logo-wrap {
+        width: 75px;
+        height: 75px;
+        margin-bottom: 18px;
+      }
+
+      .logo {
+        font-size: 34px;
+      }
+
+      .brand {
+        margin-bottom: 22px;
+      }
+
+      .card {
+        padding: 22px 16px 18px;
+        border-radius: 21px;
+      }
+
+      .subtitle {
+        font-size: 12px;
+      }
     }
-  </style>
-</head>
 
-<body>
-  <main class="container">
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style></head><body>
+  <main class="container"><header class="brand">
+  <div class="logo-wrap" aria-hidden="true">
     <div class="logo">💌</div>
+  </div>
 
-    <h1>رسالة من مجهول</h1>
-    <p class="subtitle">
-      أحيانًا هناك كلام لا نستطيع قوله مباشرة...<br>
-      اكتب رسالتك وعبّر عمّا بداخلك.
-    </p>
+  <div class="eyebrow">
+    <span class="eyebrow-dot"></span>
+    مساحة للتعبير بكل احترام
+  </div>
 
-    <form class="card" id="messageForm">
-      <div class="field">
-        <label for="sender">اسمك *</label>
-        <input id="sender" name="sender" maxlength="80"
-          placeholder="اكتب اسمك" required autocomplete="name">
-      </div>
+  <h1>رسالة من <span>مجهول</span></h1>
 
-      <div class="field">
-        <label for="recipient">اسم الشخص المستهدف *</label>
-        <input id="recipient" name="recipient" maxlength="80"
-          placeholder="لمن تريد إرسال الرسالة؟" required>
-      </div>
+  <p class="subtitle">
+    أحيانًا هناك كلام يصعب قوله مباشرة...<br>
+    اكتب رسالتك وعبّر عمّا بداخلك
+  </p>
+</header>
 
-      <div class="field">
-        <label for="message">رسالتك *</label>
-        <textarea id="message" name="message" maxlength="3000"
-          placeholder="اكتب رسالتك هنا بكل صراحة..." required></textarea>
-      </div>
+<form class="card" id="messageForm">
 
-      <p class="privacy">
-        لن يضهر اسمك لاي شخص انت مجهول لاكن خانة الاسم اجبارية للموقع
-      </p>
+  <div class="card-heading">
+    <div class="heading-icon" aria-hidden="true">✉️</div>
+    <div>
+      <h2>اكتب رسالتك</h2>
+      <p>عبّر بكلماتك وكن محترمًا دائمًا</p>
+    </div>
+  </div>
 
-      <button id="sendButton" type="submit">💌 إرسال الرسالة</button>
-      <div id="status" role="status" aria-live="polite"></div>
-    </form>
+  <div class="field">
+    <label for="sender">اسمك *</label>
+    <div class="input-wrap">
+      <span class="field-icon" aria-hidden="true">👤</span>
+      <input
+        id="sender"
+        name="sender"
+        maxlength="80"
+        placeholder="اكتب اسمك هنا"
+        required
+        autocomplete="name"
+      >
+    </div>
+  </div>
 
-    <div class="footer">رسالة من مجهول · مساحة للتعبير بكل احترام</div>
-  </main>
+  <div class="field">
+    <label for="recipient">اسم المستلم *</label>
+    <div class="input-wrap">
+      <span class="field-icon" aria-hidden="true">💜</span>
+      <input
+        id="recipient"
+        name="recipient"
+        maxlength="80"
+        placeholder="لمن تريد إرسال الرسالة؟"
+        required
+      >
+    </div>
+  </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="script.js"></script>
-</body>
+  <div class="field">
+    <label for="message">نص الرسالة *</label>
+    <textarea
+      id="message"
+      name="message"
+      maxlength="3000"
+      placeholder="اكتب ما تريد قوله بكل صراحة..."
+      required
+    ></textarea>
+  </div>
+
+  <div class="privacy">
+    <span class="privacy-icon" aria-hidden="true">🔒</span>
+    <div>
+      <strong>تنويه حول الخصوصية</strong><br>
+      سيضهر اسم الشخص المستهدف ورسالتك فقط اسمك مخفي بالكامل لن يراه اي شخص
+    </div>
+  </div>
+
+  <button class="send-button" id="sendButton" type="submit">
+    <span class="button-icon" aria-hidden="true">💌</span>
+    <span>إرسال الرسالة</span>
+  </button>
+
+  <div id="status" role="status" aria-live="polite"></div>
+
+</form>
+
+<footer class="footer">
+  <div class="footer-line"></div>
+  <p>رسالة من مجهول · مساحة للتعبير بكل احترام</p>
+  <p>صُنع بعناية <span class="heart">♥</span></p>
+</footer>
+
+  </main>  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>  <script src="script.js"></script></body>
 </html>
