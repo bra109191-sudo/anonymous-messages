@@ -1,21 +1,43 @@
-<!DOCTYPE html><html lang="ar" dir="rtl">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#090810">
-  <meta name="description" content="مساحة للتعبير عن مشاعرك وإرسال رسالتك بكل احترام.">
-  <title>رسالة من مجهول 💌</title>  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <meta name="theme-color" content="#080711">
+  <meta name="description" content="مساحة خاصة للتعبير عن مشاعرك وإرسال رسالتك بكل احترام.">
+
+  <title>رسالة من مجهول 💌</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">  <style>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
     :root {
       color-scheme: dark;
-      --bg: #090810;
-      --panel: rgba(24, 20, 38, .76);
+
+      --bg: #080711;
+      --surface: rgba(21, 17, 34, .88);
+      --surface-soft: rgba(255, 255, 255, .035);
+
       --purple: #a970ff;
-      --purple-light: #d2adff;
-      --text: #f8f5ff;
-      --muted: #aaa0bd;
-      --border: rgba(218, 190, 255, .14);
+      --purple-light: #d9bcff;
+      --purple-dark: #7840c8;
+
+      --text: #fbf9ff;
+      --muted: #a49ab8;
+      --muted-dark: #777087;
+
+      --border: rgba(216, 187, 255, .13);
+      --border-light: rgba(226, 207, 255, .23);
+
+      --radius-xl: 28px;
+      --radius-lg: 18px;
+
+      --shadow:
+        0 35px 100px rgba(0, 0, 0, .48),
+        0 0 60px rgba(114, 61, 191, .07);
     }
 
     * {
@@ -25,207 +47,542 @@
     html {
       min-height: 100%;
       scroll-behavior: smooth;
+      -webkit-text-size-adjust: 100%;
     }
 
     body {
       margin: 0;
       min-height: 100vh;
       min-height: 100dvh;
-      padding: 44px 18px 24px;
+      padding: 30px 22px 24px;
+
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
+      justify-content: center;
+
       overflow-x: hidden;
       position: relative;
       isolation: isolate;
+
       font-family: "Cairo", sans-serif;
       color: var(--text);
+
       background:
-        radial-gradient(ellipse at 50% -15%, rgba(116, 55, 191, .25), transparent 55%),
-        radial-gradient(ellipse at 100% 65%, rgba(91, 46, 160, .10), transparent 40%),
+        radial-gradient(
+          ellipse at 50% -15%,
+          rgba(130, 72, 211, .21),
+          transparent 48%
+        ),
+        radial-gradient(
+          ellipse at 0% 70%,
+          rgba(87, 54, 165, .12),
+          transparent 38%
+        ),
+        radial-gradient(
+          ellipse at 100% 100%,
+          rgba(127, 66, 187, .09),
+          transparent 38%
+        ),
         var(--bg);
     }
 
-    body::before,
-    body::after {
-      content: "";
+    /* الخلفية السينمائية */
+
+    .ambient {
       position: fixed;
-      width: 300px;
-      height: 300px;
-      border-radius: 50%;
-      filter: blur(100px);
-      opacity: .23;
+      inset: 0;
+      overflow: hidden;
       pointer-events: none;
-      z-index: -1;
-      animation: floatGlow 12s ease-in-out infinite alternate;
+      z-index: -2;
     }
 
-    body::before {
-      top: 8%;
-      right: -190px;
-      background: #8038ed;
-    }
-
-    body::after {
-      bottom: 4%;
-      left: -200px;
-      background: #4d38c9;
-      animation-delay: -5s;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 460px;
-      margin: auto;
-      animation: enter .8s cubic-bezier(.2, .7, .2, 1) both;
-    }
-
-    .brand {
-      text-align: center;
-      margin-bottom: 26px;
-    }
-
-    .logo-wrap {
-      width: 88px;
-      height: 88px;
-      position: relative;
-      margin: 0 auto 22px;
-      display: grid;
-      place-items: center;
-    }
-
-    .logo-wrap::before {
+    .ambient::before,
+    .ambient::after {
       content: "";
       position: absolute;
-      inset: 0;
-      border-radius: 29px;
-      background: linear-gradient(145deg, rgba(197, 149, 255, .24), rgba(111, 58, 180, .04));
-      border: 1px solid rgba(219, 185, 255, .3);
-      box-shadow:
-        0 0 40px rgba(145, 77, 240, .13),
-        inset 0 1px rgba(255, 255, 255, .12);
-      transform: rotate(-7deg);
-      animation: logoFloat 5s ease-in-out infinite;
+      width: 340px;
+      height: 340px;
+      border-radius: 50%;
+      filter: blur(115px);
+      opacity: .20;
+      will-change: transform;
+      animation: ambientFloat 16s ease-in-out infinite alternate;
     }
 
-    .logo {
+    .ambient::before {
+      top: 5%;
+      right: -220px;
+      background: #9145f5;
+    }
+
+    .ambient::after {
+      bottom: 0;
+      left: -230px;
+      background: #523bd2;
+      animation-delay: -7s;
+    }
+
+    .noise {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      opacity: .12;
+
+      background-image:
+        radial-gradient(rgba(255, 255, 255, .12) .65px, transparent .65px);
+
+      background-size: 7px 7px;
+
+      mask-image: linear-gradient(
+        to bottom,
+        black,
+        transparent 85%
+      );
+    }
+
+    /* الإطار الرئيسي */
+
+    .page {
+      width: 100%;
+      max-width: 1020px;
+      margin: auto;
+
+      animation: pageEnter .85s cubic-bezier(.2, .7, .2, 1) both;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+
+      margin-bottom: 48px;
+      padding: 0 4px;
+    }
+
+    .mini-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .mini-logo {
+      width: 43px;
+      height: 43px;
+      flex: 0 0 43px;
+
+      display: grid;
+      place-items: center;
+
+      border: 1px solid var(--border-light);
+      border-radius: 14px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(199, 158, 255, .17),
+          rgba(104, 54, 164, .07)
+        );
+
+      box-shadow:
+        inset 0 1px rgba(255, 255, 255, .10),
+        0 8px 28px rgba(105, 58, 170, .10);
+
+      font-size: 21px;
+    }
+
+    .mini-brand-text {
+      min-width: 0;
+    }
+
+    .mini-brand-text strong {
+      display: block;
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.7;
+    }
+
+    .mini-brand-text span {
+      display: block;
+      color: var(--muted-dark);
+      font-size: 10px;
+      line-height: 1.7;
+    }
+
+    .secure-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+
+      padding: 9px 13px;
+      border: 1px solid var(--border);
+      border-radius: 30px;
+
+      background: rgba(255, 255, 255, .025);
+
+      color: #c8b8e1;
+      font-size: 10px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .secure-dot {
+      width: 7px;
+      height: 7px;
+      flex: 0 0 7px;
+
+      border-radius: 50%;
+      background: #9b77ef;
+
+      box-shadow: 0 0 12px rgba(169, 112, 255, .8);
+    }
+
+    /* توزيع المحتوى */
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr);
+      align-items: center;
+      gap: 58px;
+    }
+
+    /* القسم التعريفي */
+
+    .intro {
+      padding: 12px 0;
+    }
+
+    .intro-symbol {
       position: relative;
-      font-size: 39px;
-      filter: drop-shadow(0 5px 15px rgba(178, 119, 255, .35));
+
+      width: 96px;
+      height: 96px;
+      margin-bottom: 32px;
+
+      display: grid;
+      place-items: center;
+
+      border: 1px solid rgba(216, 187, 255, .24);
+      border-radius: 29px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(197, 154, 255, .17),
+          rgba(104, 60, 165, .035)
+        );
+
+      box-shadow:
+        0 18px 55px rgba(0, 0, 0, .23),
+        0 0 55px rgba(153, 91, 237, .12),
+        inset 0 1px rgba(255, 255, 255, .15);
+
+      transform: rotate(-4deg);
+      animation: symbolFloat 6s ease-in-out infinite;
+    }
+
+    .intro-symbol::before {
+      content: "";
+      position: absolute;
+      inset: 9px;
+
+      border: 1px solid rgba(226, 207, 255, .12);
+      border-radius: 22px;
+    }
+
+    .intro-symbol span {
+      position: relative;
+      font-size: 43px;
+      filter: drop-shadow(0 7px 16px rgba(174, 112, 255, .36));
     }
 
     .eyebrow {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 6px 13px;
-      margin-bottom: 12px;
-      border: 1px solid var(--border);
+      gap: 9px;
+
+      margin-bottom: 19px;
+      padding: 8px 13px;
+
+      border: 1px solid rgba(187, 142, 255, .18);
       border-radius: 30px;
-      background: rgba(255, 255, 255, .035);
+
+      background: rgba(148, 91, 224, .07);
+
       color: var(--purple-light);
       font-size: 11px;
       font-weight: 700;
-      letter-spacing: .3px;
     }
 
-    .eyebrow-dot {
-      width: 6px;
-      height: 6px;
+    .eyebrow-mark {
+      width: 19px;
+      height: 19px;
+
+      display: grid;
+      place-items: center;
+
       border-radius: 50%;
-      background: #bb91ff;
-      box-shadow: 0 0 10px #a970ff;
+      background: rgba(180, 131, 255, .15);
+
+      font-size: 11px;
     }
 
     h1 {
       margin: 0;
-      font-size: clamp(29px, 7vw, 37px);
-      line-height: 1.5;
-      font-weight: 800;
-      letter-spacing: -.7px;
+
+      font-size: clamp(35px, 4.4vw, 54px);
+      line-height: 1.45;
+      font-weight: 900;
+      letter-spacing: -.9px;
     }
 
-    h1 span {
+    h1 .title-line {
+      display: block;
+    }
+
+    h1 .highlight {
+      position: relative;
+      display: inline-block;
+
       color: var(--purple-light);
-      text-shadow: 0 0 28px rgba(169, 112, 255, .24);
+
+      text-shadow:
+        0 0 32px rgba(174, 119, 255, .20);
     }
 
-    .subtitle {
-      max-width: 340px;
-      margin: 10px auto 0;
+    .intro-description {
+      max-width: 400px;
+      margin: 18px 0 0;
+
       color: var(--muted);
       font-size: 13px;
-      line-height: 2;
+      line-height: 2.4;
     }
 
-    .card {
-      position: relative;
-      overflow: hidden;
-      padding: 26px 23px 23px;
-      border: 1px solid var(--border);
-      border-radius: 25px;
-      background:
-        linear-gradient(145deg, rgba(255, 255, 255, .045), transparent 45%),
-        var(--panel);
-      box-shadow:
-        0 28px 80px rgba(0, 0, 0, .38),
-        inset 0 1px rgba(255, 255, 255, .055);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
+    .intro-description strong {
+      color: #e5d7fa;
+      font-weight: 700;
     }
 
-    .card::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      right: 12%;
-      width: 76%;
+    .intro-divider {
+      width: 100%;
+      max-width: 330px;
       height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(210, 173, 255, .75), transparent);
+      margin: 27px 0;
+
+      background: linear-gradient(
+        90deg,
+        rgba(201, 164, 255, .30),
+        rgba(201, 164, 255, .02)
+      );
     }
 
-    .card-heading {
+    .features {
+      display: grid;
+      gap: 15px;
+    }
+
+    .feature {
       display: flex;
       align-items: center;
       gap: 12px;
-      margin-bottom: 24px;
     }
 
-    .heading-icon {
-      width: 43px;
-      height: 43px;
-      flex: 0 0 43px;
+    .feature-icon {
+      width: 39px;
+      height: 39px;
+      flex: 0 0 39px;
+
       display: grid;
       place-items: center;
-      border-radius: 14px;
-      border: 1px solid rgba(190, 145, 255, .2);
-      background: rgba(154, 91, 238, .12);
-      font-size: 21px;
+
+      border: 1px solid var(--border);
+      border-radius: 13px;
+
+      background: rgba(255, 255, 255, .035);
+
+      color: var(--purple-light);
+      font-size: 16px;
     }
 
-    .card-heading h2 {
-      margin: 0;
-      font-size: 16px;
+    .feature-copy strong {
+      display: block;
+      margin-bottom: 2px;
+
+      color: #e8e0f4;
+      font-size: 11px;
       font-weight: 800;
     }
 
-    .card-heading p {
-      margin: 3px 0 0;
-      color: var(--muted);
-      font-size: 11px;
+    .feature-copy span {
+      display: block;
+
+      color: var(--muted-dark);
+      font-size: 10px;
+      line-height: 1.9;
     }
 
+    /* بطاقة الرسالة */
+
+    .form-card {
+      position: relative;
+      min-width: 0;
+      overflow: hidden;
+
+      padding: 29px 27px 25px;
+
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-xl);
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255, 255, 255, .052),
+          transparent 38%
+        ),
+        linear-gradient(
+          180deg,
+          rgba(28, 22, 44, .95),
+          rgba(17, 14, 28, .96)
+        );
+
+      box-shadow: var(--shadow);
+
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+
+      transform: translateZ(0);
+    }
+
+    .form-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 10%;
+
+      width: 80%;
+      height: 1px;
+
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(220, 190, 255, .78),
+        transparent
+      );
+
+      pointer-events: none;
+    }
+
+    .form-card::after {
+      content: "";
+      position: absolute;
+
+      top: -120px;
+      left: -100px;
+
+      width: 210px;
+      height: 210px;
+
+      border-radius: 50%;
+      background: rgba(140, 78, 220, .075);
+      filter: blur(45px);
+
+      pointer-events: none;
+    }
+
+    .card-header {
+      position: relative;
+      z-index: 1;
+
+      display: flex;
+      align-items: center;
+      gap: 13px;
+
+      padding-bottom: 23px;
+      margin-bottom: 24px;
+
+      border-bottom: 1px solid rgba(255, 255, 255, .07);
+    }
+
+    .card-header-icon {
+      width: 48px;
+      height: 48px;
+      flex: 0 0 48px;
+
+      display: grid;
+      place-items: center;
+
+      border: 1px solid rgba(193, 151, 255, .23);
+      border-radius: 16px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(170, 112, 255, .17),
+          rgba(112, 64, 174, .08)
+        );
+
+      box-shadow: inset 0 1px rgba(255, 255, 255, .08);
+
+      font-size: 22px;
+    }
+
+    .card-header-copy {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .card-header h2 {
+      margin: 0;
+
+      font-size: 17px;
+      line-height: 1.8;
+      font-weight: 900;
+    }
+
+    .card-header p {
+      margin: 2px 0 0;
+
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.8;
+    }
+
+    .card-number {
+      align-self: flex-start;
+      padding-top: 4px;
+
+      color: rgba(215, 192, 249, .48);
+
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      direction: ltr;
+    }
+
+    /* الحقول */
+
     .field {
+      position: relative;
+      z-index: 1;
       margin-bottom: 19px;
     }
 
     label {
       display: block;
       margin-bottom: 9px;
-      color: #e9e0f7;
+
+      color: #e9e1f5;
       font-size: 12px;
-      font-weight: 700;
+      font-weight: 800;
+    }
+
+    .label-required {
+      color: #bd94ff;
     }
 
     .input-wrap {
@@ -235,55 +592,75 @@
     .field-icon {
       position: absolute;
       top: 50%;
-      right: 14px;
+      right: 15px;
+
+      display: grid;
+      place-items: center;
+
       transform: translateY(-50%);
+
+      color: #a994c6;
       font-size: 16px;
-      opacity: .75;
+
       pointer-events: none;
+      opacity: .9;
     }
 
     input,
     textarea {
+      display: block;
       width: 100%;
-      border: 1px solid rgba(255, 255, 255, .095);
-      border-radius: 14px;
+      min-width: 0;
+
+      border: 1px solid rgba(211, 187, 245, .12);
+      border-radius: 15px;
       outline: none;
-      background: rgba(8, 7, 15, .62);
+
+      background: rgba(8, 7, 15, .52);
       color: var(--text);
+
       font-family: inherit;
       font-size: 13px;
+
       transition:
-        border-color .25s ease,
-        box-shadow .25s ease,
-        background .25s ease;
+        border-color .22s ease,
+        background .22s ease,
+        box-shadow .22s ease;
     }
 
     input {
-      min-height: 52px;
-      padding: 13px 43px 13px 14px;
+      min-height: 54px;
+      padding: 13px 46px 13px 15px;
     }
 
     textarea {
-      display: block;
-      min-height: 145px;
-      padding: 14px;
-      line-height: 2;
+      min-height: 150px;
+      padding: 15px;
+
+      line-height: 2.1;
       resize: vertical;
     }
 
     input::placeholder,
     textarea::placeholder {
-      color: #756c86;
+      color: #756c87;
       opacity: 1;
+    }
+
+    input:hover,
+    textarea:hover {
+      border-color: rgba(196, 157, 255, .25);
     }
 
     input:focus,
     textarea:focus {
-      border-color: rgba(185, 135, 255, .85);
-      background: rgba(13, 9, 24, .9);
+      border-color: rgba(181, 135, 255, .78);
+
+      background: rgba(15, 10, 25, .94);
+
       box-shadow:
-        0 0 0 3px rgba(169, 112, 255, .10),
-        0 0 22px rgba(137, 75, 218, .08);
+        0 0 0 3px rgba(169, 112, 255, .09),
+        0 8px 28px rgba(0, 0, 0, .12);
     }
 
     input:focus-visible,
@@ -293,76 +670,135 @@
       outline-offset: 3px;
     }
 
+    /* تنويه الخصوصية */
+
     .privacy {
+      position: relative;
+      z-index: 1;
+
       display: flex;
       align-items: flex-start;
-      gap: 10px;
-      margin: 1px 0 21px;
-      padding: 12px;
-      border: 1px solid rgba(185, 145, 255, .11);
-      border-radius: 13px;
-      background: rgba(143, 91, 215, .065);
-      color: #bcb0cf;
+      gap: 11px;
+
+      margin: 4px 0 21px;
+      padding: 13px;
+
+      border: 1px solid rgba(184, 145, 245, .13);
+      border-radius: 15px;
+
+      background:
+        linear-gradient(
+          110deg,
+          rgba(139, 89, 205, .09),
+          rgba(255, 255, 255, .018)
+        );
+
+      color: #b9afca;
       font-size: 10px;
-      line-height: 1.9;
+      line-height: 2;
     }
 
     .privacy-icon {
-      flex: 0 0 auto;
-      font-size: 16px;
-      margin-top: 1px;
+      width: 30px;
+      height: 30px;
+      flex: 0 0 30px;
+
+      display: grid;
+      place-items: center;
+
+      border: 1px solid rgba(192, 154, 255, .14);
+      border-radius: 10px;
+
+      background: rgba(160, 105, 236, .09);
+
+      font-size: 14px;
     }
 
     .privacy strong {
-      color: #dfc9ff;
+      display: block;
+      margin-bottom: 2px;
+
+      color: #e0cefa;
+      font-size: 11px;
     }
 
+    /* زر الإرسال */
+
     .send-button {
-      width: 100%;
-      min-height: 54px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
       position: relative;
+      z-index: 1;
+
+      width: 100%;
+      min-height: 57px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 11px;
+
       overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, .22);
-      border-radius: 15px;
+
       padding: 14px 18px;
-      background: linear-gradient(110deg, #d0a7ff 0%, #ad78f3 45%, #8853d2 100%);
-      color: #170d25;
+
+      border: 1px solid rgba(255, 255, 255, .30);
+      border-radius: 16px;
+
+      background:
+        linear-gradient(
+          110deg,
+          #e0c5ff 0%,
+          #bd8cfb 42%,
+          #9760e6 100%
+        );
+
+      color: #1a0d2a;
+
       font-family: inherit;
       font-size: 14px;
-      font-weight: 800;
+      font-weight: 900;
+
       cursor: pointer;
+
       box-shadow:
-        0 10px 28px rgba(139, 77, 211, .23),
-        inset 0 1px rgba(255, 255, 255, .4);
-      transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+        0 12px 30px rgba(139, 77, 211, .22),
+        inset 0 1px rgba(255, 255, 255, .58);
+
+      transition:
+        transform .22s ease,
+        box-shadow .22s ease,
+        filter .22s ease;
     }
 
     .send-button::before {
       content: "";
       position: absolute;
-      top: -50%;
-      left: -70%;
+
+      top: -60%;
+      left: -90%;
+
       width: 45%;
-      height: 200%;
-      transform: rotate(25deg);
-      background: rgba(255, 255, 255, .24);
-      transition: left .6s ease;
+      height: 220%;
+
+      transform: rotate(24deg);
+
+      background: rgba(255, 255, 255, .30);
+
+      transition: left .65s ease;
+      pointer-events: none;
     }
 
     .send-button:hover::before {
-      left: 130%;
+      left: 140%;
     }
 
     .send-button:hover {
       transform: translateY(-2px);
-      filter: brightness(1.05);
+
+      filter: brightness(1.04);
+
       box-shadow:
-        0 14px 34px rgba(139, 77, 211, .32),
-        inset 0 1px rgba(255, 255, 255, .4);
+        0 16px 38px rgba(139, 77, 211, .31),
+        inset 0 1px rgba(255, 255, 255, .58);
     }
 
     .send-button:active {
@@ -377,8 +813,8 @@
     }
 
     .button-icon {
-      font-size: 18px;
-      transition: transform .25s ease;
+      font-size: 19px;
+      transition: transform .22s ease;
     }
 
     .send-button:hover .button-icon {
@@ -387,103 +823,313 @@
 
     #status {
       display: none;
-      padding: 12px 13px;
-      border: 1px solid transparent;
-      border-radius: 12px;
+
+      position: relative;
+      z-index: 1;
+
       margin-top: 15px;
+      padding: 13px;
+
+      border: 1px solid transparent;
+      border-radius: 13px;
+
       text-align: center;
       font-size: 12px;
       line-height: 1.9;
-      animation: enter .3s ease both;
+
+      overflow-wrap: anywhere;
+      animation: statusEnter .3s ease both;
     }
+
+    /* التذييل */
 
     .footer {
-      padding: 22px 8px 0;
-      text-align: center;
-    }
+      margin-top: 42px;
+      padding: 19px 10px 0;
 
-    .footer-line {
-      width: 55px;
-      height: 1px;
-      margin: 0 auto 13px;
-      background: linear-gradient(90deg, transparent, rgba(192, 151, 255, .55), transparent);
+      border-top: 1px solid rgba(218, 190, 255, .08);
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
     }
 
     .footer p {
       margin: 0;
-      color: #81778f;
+
+      color: var(--muted-dark);
       font-size: 10px;
       line-height: 2;
     }
 
-    .footer .heart {
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+
+      color: #b4a3cf !important;
+      font-weight: 700;
+    }
+
+    .footer-heart {
       color: #bd8bff;
     }
 
-    @keyframes enter {
+    /* الحركات */
+
+    @keyframes pageEnter {
       from {
         opacity: 0;
-        transform: translateY(18px);
+        transform: translateY(17px);
       }
+
       to {
         opacity: 1;
         transform: translateY(0);
       }
     }
 
-    @keyframes floatGlow {
-      from { transform: translate3d(0, -10px, 0) scale(.95); }
-      to { transform: translate3d(0, 25px, 0) scale(1.12); }
+    @keyframes ambientFloat {
+      from {
+        transform: translate3d(0, -12px, 0) scale(.95);
+      }
+
+      to {
+        transform: translate3d(0, 24px, 0) scale(1.12);
+      }
     }
 
-    @keyframes logoFloat {
-      0%, 100% { transform: rotate(-7deg) translateY(0); }
-      50% { transform: rotate(-3deg) translateY(-4px); }
+    @keyframes symbolFloat {
+      0%, 100% {
+        transform: rotate(-4deg) translateY(0);
+      }
+
+      50% {
+        transform: rotate(-1deg) translateY(-5px);
+      }
     }
 
-    @media (min-width: 700px) {
+    @keyframes statusEnter {
+      from {
+        opacity: 0;
+        transform: translateY(7px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* الشاشات المتوسطة */
+
+    @media (max-width: 850px) {
       body {
-        padding-top: 55px;
-        padding-bottom: 40px;
+        padding: 25px 20px 20px;
       }
 
-      .container {
-        max-width: 475px;
+      .topbar {
+        margin-bottom: 35px;
       }
 
-      .card {
-        padding: 29px 27px 26px;
+      .layout {
+        grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+        gap: 30px;
+      }
+
+      .intro-symbol {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 25px;
+        border-radius: 25px;
+      }
+
+      .intro-symbol span {
+        font-size: 36px;
+      }
+
+      h1 {
+        font-size: clamp(32px, 5vw, 43px);
+      }
+
+      .intro-description {
+        font-size: 12px;
+      }
+
+      .form-card {
+        padding: 25px 21px 22px;
+      }
+    }
+
+    /* الهاتف والآيباد الصغير */
+
+    @media (max-width: 620px) {
+      body {
+        display: block;
+        padding: 19px 15px 20px;
+      }
+
+      .page {
+        max-width: 460px;
+      }
+
+      .topbar {
+        margin-bottom: 29px;
+        gap: 9px;
+      }
+
+      .mini-logo {
+        width: 39px;
+        height: 39px;
+        flex-basis: 39px;
+        border-radius: 13px;
+      }
+
+      .mini-brand-text strong {
+        font-size: 12px;
+      }
+
+      .mini-brand-text span {
+        font-size: 9px;
+      }
+
+      .secure-badge {
+        padding: 8px 10px;
+        font-size: 9px;
+        gap: 6px;
+      }
+
+      .layout {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 28px;
+      }
+
+      .intro {
+        text-align: center;
+        padding: 0;
+      }
+
+      .intro-symbol {
+        width: 76px;
+        height: 76px;
+        margin: 0 auto 23px;
+        border-radius: 24px;
+      }
+
+      .intro-symbol span {
+        font-size: 35px;
+      }
+
+      .eyebrow {
+        margin-bottom: 13px;
+        font-size: 10px;
+      }
+
+      h1 {
+        font-size: clamp(33px, 8vw, 43px);
+        line-height: 1.48;
+      }
+
+      .intro-description {
+        max-width: 340px;
+        margin: 12px auto 0;
+        font-size: 12px;
+        line-height: 2.15;
+      }
+
+      .intro-divider,
+      .features {
+        display: none;
+      }
+
+      .form-card {
+        padding: 24px 20px 21px;
+        border-radius: 24px;
+      }
+
+      .card-header {
+        padding-bottom: 19px;
+        margin-bottom: 21px;
+      }
+
+      .card-header h2 {
+        font-size: 16px;
+      }
+
+      .footer {
+        margin-top: 27px;
+        padding-top: 17px;
       }
     }
 
     @media (max-width: 380px) {
       body {
-        padding: 28px 12px 20px;
+        padding: 15px 11px 17px;
       }
 
-      .logo-wrap {
-        width: 75px;
-        height: 75px;
-        margin-bottom: 18px;
+      .topbar {
+        margin-bottom: 25px;
       }
 
-      .logo {
-        font-size: 34px;
+      .secure-badge {
+        font-size: 8px;
+        padding: 7px 8px;
       }
 
-      .brand {
-        margin-bottom: 22px;
+      .mini-brand {
+        gap: 8px;
       }
 
-      .card {
-        padding: 22px 16px 18px;
+      .mini-brand-text strong {
+        font-size: 11px;
+      }
+
+      h1 {
+        font-size: 32px;
+      }
+
+      .intro-description {
+        font-size: 11px;
+      }
+
+      .form-card {
+        padding: 21px 15px 18px;
         border-radius: 21px;
       }
 
-      .subtitle {
-        font-size: 12px;
+      .card-header-icon {
+        width: 43px;
+        height: 43px;
+        flex-basis: 43px;
+      }
+
+      .field {
+        margin-bottom: 17px;
+      }
+
+      input {
+        min-height: 51px;
+      }
+
+      textarea {
+        min-height: 135px;
+      }
+
+      .privacy {
+        padding: 11px;
+      }
+
+      .footer {
+        align-items: flex-start;
+      }
+
+      .footer p {
+        font-size: 9px;
       }
     }
+
+    /* احترام إعدادات تقليل الحركة */
 
     @media (prefers-reduced-motion: reduce) {
       *,
@@ -495,97 +1141,189 @@
         transition-duration: .01ms !important;
       }
     }
-  </style></head><body>
-  <main class="container"><header class="brand">
-  <div class="logo-wrap" aria-hidden="true">
-    <div class="logo">💌</div>
-  </div>
+  </style>
+</head>
 
-  <div class="eyebrow">
-    <span class="eyebrow-dot"></span>
-    مساحة للتعبير بكل احترام
-  </div>
+<body>
 
-  <h1>رسالة من <span>مجهول</span></h1>
+  <div class="ambient" aria-hidden="true"></div>
+  <div class="noise" aria-hidden="true"></div>
 
-  <p class="subtitle">
-    أحيانًا هناك كلام يصعب قوله مباشرة...<br>
-    اكتب رسالتك وعبّر عمّا بداخلك
-  </p>
-</header>
+  <main class="page">
 
-<form class="card" id="messageForm">
+    <header class="topbar">
+      <div class="mini-brand">
+        <div class="mini-logo" aria-hidden="true">💌</div>
 
-  <div class="card-heading">
-    <div class="heading-icon" aria-hidden="true">✉️</div>
-    <div>
-      <h2>اكتب رسالتك</h2>
-      <p>عبّر بكلماتك وكن محترمًا دائمًا</p>
+        <div class="mini-brand-text">
+          <strong>رسالة من مجهول</strong>
+          <span>مساحة للكلام الذي لم يُقال</span>
+        </div>
+      </div>
+
+      <div class="secure-badge">
+        <span class="secure-dot"></span>
+        مساحة للتعبير
+      </div>
+    </header>
+
+    <div class="layout">
+
+      <section class="intro" aria-labelledby="pageTitle">
+
+        <div class="intro-symbol" aria-hidden="true">
+          <span>💌</span>
+        </div>
+
+        <div class="eyebrow">
+          <span class="eyebrow-mark">✦</span>
+          أحيانًا للكلمات حكاية
+        </div>
+
+        <h1 id="pageTitle">
+          <span class="title-line">رسالة من</span>
+          <span class="highlight">مجهول</span>
+        </h1>
+
+        <p class="intro-description">
+          هناك كلمات تبقى في القلب طويلًا،
+          ومشاعر يصعب التعبير عنها وجهًا لوجه.
+          <br>
+          <strong>اكتب ما تريد قوله واترك لكلماتك أن تتحدث.</strong>
+        </p>
+
+        <div class="intro-divider"></div>
+
+        <div class="features">
+
+          <div class="feature">
+            <div class="feature-icon" aria-hidden="true">✍️</div>
+            <div class="feature-copy">
+              <strong>عبّر بطريقتك</strong>
+              <span>اكتب رسالتك بأسلوبك وكلماتك الخاصة.</span>
+            </div>
+          </div>
+
+          <div class="feature">
+            <div class="feature-icon" aria-hidden="true">💜</div>
+            <div class="feature-copy">
+              <strong>اختر الشخص المقصود</strong>
+              <span>حدّد اسم الشخص الذي تريد إرسال رسالتك إليه</span>
+            </div>
+          </div>
+
+          <div class="feature">
+            <div class="feature-icon" aria-hidden="true">✦</div>
+            <div class="feature-copy">
+              <strong>اجعل كلماتك راقية</strong>
+              <span>رسالتك أجمل عندما تحمل الاحترام والصدق</span>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+      <form class="form-card" id="messageForm">
+
+        <div class="card-header">
+
+          <div class="card-header-icon" aria-hidden="true">✉️</div>
+
+          <div class="card-header-copy">
+            <h2>اكتب رسالتك</h2>
+            <p>خذ وقتك واكتب ما تريد قوله.</p>
+          </div>
+
+          <span class="card-number" aria-hidden="true">01 / 01</span>
+
+        </div>
+
+        <div class="field">
+          <label for="sender">
+            اسمك <span class="label-required">*</span>
+          </label>
+
+          <div class="input-wrap">
+            <span class="field-icon" aria-hidden="true">♙</span>
+
+            <input
+              id="sender"
+              name="sender"
+              type="text"
+              maxlength="80"
+              placeholder="اكتب اسمك هنا"
+              autocomplete="name"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="recipient">
+            اسم المستلم <span class="label-required">*</span>
+          </label>
+
+          <div class="input-wrap">
+            <span class="field-icon" aria-hidden="true">♡</span>
+
+            <input
+              id="recipient"
+              name="recipient"
+              type="text"
+              maxlength="80"
+              placeholder="لمن تريد إرسال الرسالة؟"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="message">
+            نص الرسالة <span class="label-required">*</span>
+          </label>
+
+          <textarea
+            id="message"
+            name="message"
+            maxlength="3000"
+            placeholder="اكتب ما يجول في خاطرك..."
+            required
+          ></textarea>
+        </div>
+
+        <div class="privacy">
+          <div class="privacy-icon" aria-hidden="true">🔒</div>
+
+          <div>
+            <strong>معلومة مهمة عن الخصوصية</strong>
+            اسمك لن يضهر لاي شخص ستضهر رسالتك واسم الشخص المستهدف فقط
+          </div>
+        </div>
+
+        <button class="send-button" id="sendButton" type="submit">
+          <span class="button-icon" aria-hidden="true">💌</span>
+          <span>إرسال الرسالة</span>
+        </button>
+
+        <div id="status" role="status" aria-live="polite"></div>
+
+      </form>
+
     </div>
-  </div>
 
-  <div class="field">
-    <label for="sender">اسمك *</label>
-    <div class="input-wrap">
-      <span class="field-icon" aria-hidden="true">👤</span>
-      <input
-        id="sender"
-        name="sender"
-        maxlength="80"
-        placeholder="اكتب اسمك هنا"
-        required
-        autocomplete="name"
-      >
-    </div>
-  </div>
+    <footer class="footer">
+      <p>رسالة من مجهول · مساحة للتعبير بكل احترام</p>
 
-  <div class="field">
-    <label for="recipient">اسم المستلم *</label>
-    <div class="input-wrap">
-      <span class="field-icon" aria-hidden="true">💜</span>
-      <input
-        id="recipient"
-        name="recipient"
-        maxlength="80"
-        placeholder="لمن تريد إرسال الرسالة؟"
-        required
-      >
-    </div>
-  </div>
+      <p class="footer-brand">
+        صُنع بعناية <span class="footer-heart">♥</span>
+      </p>
+    </footer>
 
-  <div class="field">
-    <label for="message">نص الرسالة *</label>
-    <textarea
-      id="message"
-      name="message"
-      maxlength="3000"
-      placeholder="اكتب ما تريد قوله بكل صراحة..."
-      required
-    ></textarea>
-  </div>
+  </main>
 
-  <div class="privacy">
-    <span class="privacy-icon" aria-hidden="true">🔒</span>
-    <div>
-      <strong>تنويه حول الخصوصية</strong><br>
-      سيضهر اسم الشخص المستهدف ورسالتك فقط اسمك مخفي بالكامل لن يراه اي شخص
-    </div>
-  </div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="script.js"></script>
 
-  <button class="send-button" id="sendButton" type="submit">
-    <span class="button-icon" aria-hidden="true">💌</span>
-    <span>إرسال الرسالة</span>
-  </button>
-
-  <div id="status" role="status" aria-live="polite"></div>
-
-</form>
-
-<footer class="footer">
-  <div class="footer-line"></div>
-  <p>رسالة من مجهول · مساحة للتعبير بكل احترام</p>
-  <p>صُنع بعناية <span class="heart">♥</span></p>
-</footer>
-
-  </main>  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>  <script src="script.js"></script></body>
-</html>
+</body>
+      </html>
