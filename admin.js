@@ -11,6 +11,7 @@ SUPABASE_URL,
 SUPABASE_KEY
 );
 
+// عناصر الصفحة
 const loginCard = document.getElementById("loginCard");
 const loginForm = document.getElementById("loginForm");
 const loginButton = document.getElementById("loginButton");
@@ -24,39 +25,115 @@ const searchInput = document.getElementById("searchInput");
 const refreshButton = document.getElementById("refreshButton");
 const logoutButton = document.getElementById("logoutButton");
 
+// عناصر التصميم الجديد
+const notificationBell = document.getElementById("notificationBell");
+const notificationBadge = document.getElementById("notificationBadge");
+const totalMessagesElement = document.getElementById("totalMessages");
+const newMessagesCountElement = document.getElementById("newMessagesCount");
+const systemStatusElement = document.getElementById("systemStatus");
+const notificationToast = document.getElementById("notificationToast");
+const notificationToastText = document.getElementById("notificationToastText");
+
 let allMessages = [];
 let realtimeChannel = null;
 let realtimeVersion = 0;
+let toastTimer = null;
+
+const STORAGE_KEY = `anonymous_messages_unread_${ADMIN_UID}`;
+
+function getUnreadIds() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    return new Set(saved.map(String));
+  } catch {
+    return new Set();
+  }
+}
+
+let unreadIds = getUnreadIds();
+
+function saveUnreadIds() {
+  try {
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify([...unreadIds])
+    );
+  } catch (error) {
+    console.error("Could not save unread messages:", error);
+  }
+}
 
 function showStatus(element, message, success = false) {
+  if (!element) return;
+
   element.textContent = message;
   element.style.color = success ? "#8be0b0" : "#ff9ca9";
 }
 
 function clearStatus(element) {
-  element.textContent = "";
+  if (element) element.textContent = "";
 }
 
 function showLogin() {
-  loginCard.classList.remove("hidden");
-  dashboard.classList.add("hidden");
+  loginCard?.classList.remove("hidden");
+  dashboard?.classList.add("hidden");
 }
 
 function showDashboard() {
-  loginCard.classList.add("hidden");
-  dashboard.classList.remove("hidden");
+  loginCard?.classList.add("hidden");
+  dashboard?.classList.remove("hidden");
 }
 
 function makeTextElement(tag, className, text) {
   const element = document.createElement(tag);
 
-  if (className) {
-    element.className = className;
-  }
+  if (className) element.className = className;
 
   element.textContent = text ?? "";
 
   return element;
+}
+
+function showToast(message) {
+  if (!notificationToast || !notificationToastText) return;
+
+  notificationToastText.textContent = message;
+  notificationToast.classList.remove("hidden");
+  notificationToast.classList.add("show");
+
+  if (toastTimer) clearTimeout(toastTimer);
+
+  toastTimer = setTimeout(() => {
+    notificationToast.classList.remove("show");
+    notificationToast.classList.add("hidden");
+  }, 5000);
+}
+
+function updateStatistics() {
+  const unreadCount = unreadIds.size;
+
+  if (totalMessagesElement) {
+    totalMessagesElement.textContent = allMessages.length;
+  }
+
+  if (newMessagesCountElement) {
+    newMessagesCountElement.textContent = unreadCount;
+  }
+
+  if (notificationBadge) {
+    notificationBadge.textContent =
+      unreadCount > 99 ? "99+" : String(unreadCount);
+
+    notificationBadge.classList.toggle(
+      "hidden",
+      unreadCount === 0
+    );
+
+    notificationBadge.setAttribute(
+      "aria-label",
+      `${unreadCount} رسالة غير مقروءة`
+    );
+  }
 }
 
 function sortMessages() {
@@ -65,7 +142,23 @@ function sortMessages() {
   });
 }
 
+function markMessageAsRead(id) {
+  unreadIds.delete(String(id));
+  saveUnreadIds();
+  updateStatistics();
+  renderMessages();
+}
+
+function markAllAsRead() {
+  unreadIds.clear();
+  saveUnreadIds();
+  updateStatistics();
+  renderMessages();
+}
+
 function renderMessages() {
+  if (!messagesList || !searchInput) return;
+
   const term = searchInput.value.trim().toLocaleLowerCase();
 
   const filtered = allMessages.filter((message) => {
@@ -78,11 +171,13 @@ function renderMessages() {
     return searchableText.includes(term);
   });
 
-  messageCount.textContent =
-    `عدد الرسائل: ${filtered.length}` +
-    (filtered.length !== allMessages.length
-      ? ` من أصل ${allMessages.length}`
-      : "");
+  if (messageCount) {
+    messageCount.textContent =
+      `عدد الرسائل: ${filtered.length}` +
+      (filtered.length !== allMessages.length
+        ? ` من أصل ${allMessages.length}`
+        : "");
+  }
 
   messagesList.replaceChildren();
 
@@ -97,12 +192,19 @@ function renderMessages() {
       )
     );
 
+    updateStatistics();
     return;
   }
 
   filtered.forEach((message) => {
     const card = document.createElement("article");
     card.className = "message";
+
+    const isUnread = unreadIds.has(String(message.id));
+
+    if (isUnread) {
+      card.classList.add("unread-message");
+    }
 
     const sender = makeTextElement(
       "div",
@@ -119,12 +221,14 @@ function renderMessages() {
     const date = makeTextElement(
       "div",
       "meta",
-      `تاريخ الإرسال: ${message.created_at
-        ? new Date(message.created_at).toLocaleString("ar", {
-            dateStyle: "medium",
-            timeStyle: "short"
-          })
-        : "غير محدد"}`
+      `تاريخ الإرسال: ${
+        message.created_at
+          ? new Date(message.created_at).toLocaleString("ar", {
+              dateStyle: "medium",
+              timeStyle: "short"
+            })
+          : "غير محدد"
+      }`
     );
 
     const messageHeading = makeTextElement(
@@ -138,6 +242,35 @@ function renderMessages() {
       "message-text",
       message.message_text || ""
     );
+
+    const actions = document.createElement("div");
+    actions.className = "message-actions";
+
+    if (isUnread) {
+      const unreadLabel = makeTextElement(
+        "span",
+        "count-pill",
+        "جديدة"
+      );
+
+      const readButton = makeTextElement(
+        "button",
+        "tool-button",
+        "تعليم كمقروءة"
+      );
+
+      readButton.type = "button";
+
+      readButton.addEventListener("click", () => {
+        markMessageAsRead(message.id);
+      });
+
+      actions.append(unreadLabel, readButton);
+    } else {
+      actions.appendChild(
+        makeTextElement("span", "meta", "تمت قراءتها")
+      );
+    }
 
     const deleteButton = makeTextElement(
       "button",
@@ -176,6 +309,9 @@ function renderMessages() {
           (item) => item.id !== message.id
         );
 
+        unreadIds.delete(String(message.id));
+        saveUnreadIds();
+
         renderMessages();
 
         showStatus(
@@ -183,7 +319,6 @@ function renderMessages() {
           "تم حذف الرسالة بنجاح.",
           true
         );
-
       } catch (error) {
         console.error("Delete failed:", error);
 
@@ -203,14 +338,19 @@ function renderMessages() {
       date,
       messageHeading,
       messageText,
+      actions,
       deleteButton
     );
 
     messagesList.appendChild(card);
   });
+
+  updateStatistics();
 }
 
 async function loadMessages() {
+  if (!refreshButton) return;
+
   const currentVersion = realtimeVersion;
 
   refreshButton.disabled = true;
@@ -226,28 +366,42 @@ async function loadMessages() {
 
     if (error) throw error;
 
-    // دمج نتيجة التحميل مع أي تغييرات وصلت أثناء التحميل
     const latestById = new Map(
-      (data || []).map((message) => [message.id, message])
+      (data || []).map((message) => [
+        String(message.id),
+        message
+      ])
     );
 
-    // لا نستبدل التغييرات الفورية الأحدث بنتيجة تحميل قديمة
     if (currentVersion === realtimeVersion) {
       allMessages = Array.from(latestById.values());
     } else {
       const existingById = new Map(
-        allMessages.map((message) => [message.id, message])
+        allMessages.map((message) => [
+          String(message.id),
+          message
+        ])
       );
 
       for (const message of data || []) {
-        if (!existingById.has(message.id)) {
-          existingById.set(message.id, message);
+        if (!existingById.has(String(message.id))) {
+          existingById.set(String(message.id), message);
         }
       }
 
       allMessages = Array.from(existingById.values());
     }
 
+    // إزالة إشعارات الرسائل التي لم تعد موجودة
+    const existingIds = new Set(
+      allMessages.map((message) => String(message.id))
+    );
+
+    unreadIds = new Set(
+      [...unreadIds].filter((id) => existingIds.has(id))
+    );
+
+    saveUnreadIds();
     sortMessages();
     renderMessages();
 
@@ -256,7 +410,6 @@ async function loadMessages() {
       "تم تحميل الرسائل بنجاح.",
       true
     );
-
   } catch (error) {
     console.error("Loading messages failed:", error);
 
@@ -264,7 +417,6 @@ async function loadMessages() {
       dashboardStatus,
       "تعذر تحميل الرسائل. تحقق من إعدادات Supabase وصلاحيات المدير."
     );
-
   } finally {
     refreshButton.disabled = false;
     refreshButton.textContent = "تحديث الرسائل";
@@ -276,9 +428,14 @@ function handleRealtimeInsert(message) {
 
   realtimeVersion++;
 
+  const id = String(message.id);
+
   const existingIndex = allMessages.findIndex(
-    (item) => item.id === message.id
+    (item) => String(item.id) === id
   );
+
+  // لا نكرر التنبيه إذا وصل الحدث نفسه أكثر من مرة
+  const isActuallyNew = existingIndex === -1;
 
   if (existingIndex !== -1) {
     allMessages[existingIndex] = message;
@@ -286,14 +443,21 @@ function handleRealtimeInsert(message) {
     allMessages.push(message);
   }
 
+  if (isActuallyNew) {
+    unreadIds.add(id);
+    saveUnreadIds();
+
+    showToast("📩 وصلت رسالة جديدة!");
+
+    showStatus(
+      dashboardStatus,
+      "وصلت رسالة جديدة وتم تحديث القائمة تلقائيًا.",
+      true
+    );
+  }
+
   sortMessages();
   renderMessages();
-
-  showStatus(
-    dashboardStatus,
-    "📩 وصلت رسالة جديدة وتم تحديث القائمة تلقائيًا.",
-    true
-  );
 }
 
 function handleRealtimeDelete(message) {
@@ -301,9 +465,14 @@ function handleRealtimeDelete(message) {
 
   realtimeVersion++;
 
+  const id = String(message.id);
+
   allMessages = allMessages.filter(
-    (item) => item.id !== message.id
+    (item) => String(item.id) !== id
   );
+
+  unreadIds.delete(id);
+  saveUnreadIds();
 
   renderMessages();
 
@@ -359,6 +528,11 @@ async function startRealtimeSubscription() {
       if (realtimeChannel !== channel) return;
 
       if (status === "SUBSCRIBED") {
+        if (systemStatusElement) {
+          systemStatusElement.textContent = "متصل";
+          systemStatusElement.classList.add("online");
+        }
+
         showStatus(
           dashboardStatus,
           "🟢 التحديث الفوري متصل. ستظهر الرسائل الجديدة تلقائيًا.",
@@ -368,15 +542,20 @@ async function startRealtimeSubscription() {
         status === "CHANNEL_ERROR" ||
         status === "TIMED_OUT"
       ) {
+        if (systemStatusElement) {
+          systemStatusElement.textContent = "غير متصل";
+          systemStatusElement.classList.remove("online");
+        }
+
         showStatus(
           dashboardStatus,
-          "⚠️ تعذر الاتصال بالتحديث الفوري. تحقق من تفعيل Realtime في Supabase."
+          "تعذر الاتصال بالتحديث الفوري. تحقق من إعدادات Realtime في Supabase."
         );
       } else if (status === "CLOSED") {
-        showStatus(
-          dashboardStatus,
-          "انقطع اتصال التحديث الفوري. قد تحتاج إلى إعادة فتح الصفحة."
-        );
+        if (systemStatusElement) {
+          systemStatusElement.textContent = "منقطع";
+          systemStatusElement.classList.remove("online");
+        }
       }
     });
 
@@ -411,10 +590,8 @@ async function checkSession() {
 
     showDashboard();
 
-    // نبدأ الاشتراك أولًا حتى لا تفوتنا رسالة جديدة أثناء التحميل
     await startRealtimeSubscription();
     await loadMessages();
-
   } catch (error) {
     console.error("Session check failed:", error);
 
@@ -459,7 +636,6 @@ loginForm.addEventListener("submit", async (event) => {
 
     await startRealtimeSubscription();
     await loadMessages();
-
   } catch (error) {
     console.error("Login failed:", error);
 
@@ -470,7 +646,6 @@ loginForm.addEventListener("submit", async (event) => {
         ? error.message
         : "فشل تسجيل الدخول. تحقق من البريد الإلكتروني وكلمة المرور."
     );
-
   } finally {
     loginButton.disabled = false;
     loginButton.textContent = "تسجيل الدخول";
@@ -498,7 +673,6 @@ logoutButton.addEventListener("click", async () => {
     showLogin();
     clearStatus(loginStatus);
     clearStatus(dashboardStatus);
-
   } catch (error) {
     console.error("Logout failed:", error);
 
@@ -506,10 +680,22 @@ logoutButton.addEventListener("click", async () => {
       dashboardStatus,
       "تعذر تسجيل الخروج. حاول مرة أخرى."
     );
-
   } finally {
     logoutButton.disabled = false;
   }
 });
 
+// الضغط على الجرس يعلّم الإشعارات الحالية كمقروءة
+if (notificationBell) {
+  notificationBell.addEventListener("click", () => {
+    markAllAsRead();
+
+    messagesList?.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  });
+}
+
+updateStatistics();
 checkSession();
