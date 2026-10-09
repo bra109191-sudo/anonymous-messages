@@ -2,9 +2,10 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#0b0912">
-  <title>لوحة المدير | رسالة من مجهول</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10101a">
+  <meta name="description" content="لوحة إدارة رسائل من مجهول">
+  <title>لوحة الإدارة | رسالة من مجهول</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,18 +13,19 @@
 
   <style>
     :root {
-      color-scheme: dark;
-      --bg: #0b0912;
-      --panel: #14111e;
-      --panel2: #1b1628;
-      --border: rgba(195, 157, 255, .13);
-      --purple: #a970ff;
-      --purple2: #7843d6;
-      --text: #f7f3ff;
-      --muted: #938aa5;
-      --green: #60e6b0;
-      --red: #ff6f91;
-      --radius: 22px;
+      --bg: #0b0b13;
+      --panel: #151522;
+      --panel-2: #1b1b2b;
+      --border: rgba(255,255,255,.09);
+      --text: #f5f3ff;
+      --muted: #a4a0bb;
+      --purple: #a78bfa;
+      --purple-dark: #7c3aed;
+      --green: #4ade80;
+      --red: #fb7185;
+      --gold: #fbbf24;
+      --radius: 20px;
+      --shadow: 0 16px 45px rgba(0,0,0,.25);
     }
 
     * {
@@ -31,66 +33,54 @@
     }
 
     html {
-      min-height: 100%;
       scroll-behavior: smooth;
     }
 
     body {
       margin: 0;
       min-height: 100vh;
-      font-family: "Cairo", sans-serif;
-      color: var(--text);
       background:
-        radial-gradient(ellipse at 50% -15%, rgba(123, 61, 200, .22), transparent 55%),
-        radial-gradient(ellipse at 100% 45%, rgba(75, 43, 117, .08), transparent 40%),
+        radial-gradient(ellipse at top right, rgba(124,58,237,.15), transparent 40%),
+        radial-gradient(ellipse at bottom left, rgba(99,102,241,.08), transparent 35%),
         var(--bg);
-      -webkit-tap-highlight-color: transparent;
+      color: var(--text);
+      font-family: "Cairo", sans-serif;
     }
 
-    button, input {
+    button,
+    input,
+    textarea {
       font: inherit;
     }
 
     button {
-      -webkit-appearance: none;
-      appearance: none;
+      cursor: pointer;
     }
 
-    button:focus-visible,
-    input:focus-visible {
-      outline: 2px solid var(--purple);
-      outline-offset: 3px;
-    }
-
-    button:disabled {
-      opacity: .55;
-      cursor: wait;
+    .hidden {
+      display: none !important;
     }
 
     .app {
-      width: 100%;
-      max-width: 1440px;
+      width: min(1100px, 100%);
       margin: auto;
-      padding: 18px;
+      padding: 20px;
     }
 
     /* الشريط العلوي */
 
     .topbar {
-      min-height: 76px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 14px;
-      padding: 14px 18px;
+      gap: 15px;
+      padding: 16px 20px;
+      background: rgba(21,21,34,.85);
       border: 1px solid var(--border);
-      border-radius: 24px;
-      background: rgba(20, 17, 30, .84);
+      border-radius: var(--radius);
       backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, .18);
-      position: relative;
-      z-index: 10;
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
     }
 
     .brand {
@@ -103,174 +93,140 @@
     .brand-logo {
       width: 46px;
       height: 46px;
-      flex: 0 0 46px;
+      flex-shrink: 0;
       display: grid;
       place-items: center;
-      border-radius: 16px;
-      font-size: 23px;
-      background: linear-gradient(145deg, #bd8cff, #7541cf);
-      box-shadow: 0 6px 25px rgba(153, 95, 255, .27);
-    }
-
-    .brand-title {
-      font-size: 16px;
+      border-radius: 15px;
+      color: white;
+      font-size: 22px;
       font-weight: 800;
-      line-height: 1.6;
+      background: linear-gradient(135deg, #a78bfa, #6d28d9);
+      box-shadow: 0 6px 22px rgba(124,58,237,.3);
     }
 
-    .brand-subtitle {
-      color: var(--muted);
-      font-size: 11px;
+    .brand h1 {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 800;
     }
+
+    .brand p {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* أزرار وأدوات لوحة التحكم */
 
     .top-actions {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
     }
 
     .online-label {
       display: flex;
       align-items: center;
       gap: 7px;
-      color: #b7b0c5;
-      font-size: 11px;
+      color: var(--muted);
+      font-size: 12px;
       white-space: nowrap;
     }
 
     .online-dot {
-      width: 7px;
-      height: 7px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
       background: var(--green);
-      box-shadow: 0 0 12px rgba(96, 230, 176, .7);
+      box-shadow: 0 0 12px rgba(74,222,128,.5);
     }
 
     .icon-button {
-      width: 46px;
-      height: 46px;
+      width: 44px;
+      height: 44px;
       display: grid;
       place-items: center;
       position: relative;
+      color: white;
+      background: var(--panel-2);
       border: 1px solid var(--border);
-      border-radius: 15px;
-      color: var(--text);
-      background: var(--panel2);
-      cursor: pointer;
-      transition: border-color .2s, background .2s, transform .2s;
+      border-radius: 14px;
+      font-size: 20px;
+      transition: .2s ease;
     }
 
-    .icon-button:active {
-      transform: scale(.95);
+    .icon-button:hover {
+      border-color: var(--purple);
+      transform: translateY(-2px);
     }
 
-    .icon-button svg {
-      width: 22px;
-      height: 22px;
-    }
-
-    .bell-badge {
+    .notification-badge {
       position: absolute;
       top: -5px;
       left: -5px;
-      min-width: 21px;
-      height: 21px;
-      display: none;
-      align-items: center;
-      justify-content: center;
+      min-width: 20px;
+      height: 20px;
       padding: 0 5px;
-      border: 2px solid var(--bg);
-      border-radius: 99px;
+      display: grid;
+      place-items: center;
+      border-radius: 20px;
+      background: var(--red);
       color: white;
-      background: #ff416c;
-      font-size: 10px;
-      font-weight: 800;
-      box-shadow: 0 0 15px rgba(255, 65, 108, .35);
-    }
-
-    .bell-badge.has-count {
-      display: flex;
-      animation: badgePop .35s ease-out;
-    }
-
-    .bell-button.has-new svg {
-      animation: bellRing 1.8s ease-in-out infinite;
-    }
-
-    @keyframes bellRing {
-      0%, 75%, 100% { transform: rotate(0); }
-      80% { transform: rotate(12deg); }
-      85% { transform: rotate(-12deg); }
-      90% { transform: rotate(8deg); }
-      95% { transform: rotate(-5deg); }
-    }
-
-    @keyframes badgePop {
-      0% { transform: scale(.5); }
-      70% { transform: scale(1.2); }
-      100% { transform: scale(1); }
-    }
-
-    /* مقدمة اللوحة */
-
-    .welcome {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 18px;
-      padding: 34px 6px 25px;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      margin-bottom: 9px;
-      color: #c5a5ff;
       font-size: 11px;
       font-weight: 800;
-      letter-spacing: .4px;
+      border: 2px solid var(--panel);
     }
 
-    .eyebrow-mark {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--purple);
-      box-shadow: 0 0 12px var(--purple);
+    .dashboard-actions {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
     }
 
-    h1 {
-      margin: 0;
-      font-size: clamp(23px, 4vw, 34px);
+    /* الترحيب */
+
+    .welcome {
+      position: relative;
+      overflow: hidden;
+      padding: 30px;
+      margin-bottom: 22px;
+      border: 1px solid rgba(167,139,250,.2);
+      border-radius: 24px;
+      background:
+        radial-gradient(circle at 10% 20%, rgba(167,139,250,.16), transparent 35%),
+        linear-gradient(135deg, #1b1830, #171522);
+      box-shadow: var(--shadow);
+      animation: fadeUp .45s ease both;
+    }
+
+    .welcome::after {
+      content: "✦";
+      position: absolute;
+      left: 25px;
+      top: 5px;
+      font-size: 100px;
+      line-height: 1;
+      color: rgba(167,139,250,.08);
+      pointer-events: none;
+    }
+
+    .welcome h2 {
+      position: relative;
+      z-index: 1;
+      margin: 0 0 8px;
+      font-size: clamp(22px, 4vw, 30px);
       font-weight: 800;
-      letter-spacing: -.5px;
-      line-height: 1.5;
     }
 
     .welcome p {
-      margin: 7px 0 0;
+      position: relative;
+      z-index: 1;
+      margin: 0;
       color: var(--muted);
-      font-size: 13px;
+      font-size: 14px;
       line-height: 1.9;
-    }
-
-    .welcome-icon {
-      width: 76px;
-      height: 76px;
-      flex: 0 0 76px;
-      display: grid;
-      place-items: center;
-      border: 1px solid rgba(181, 132, 255, .2);
-      border-radius: 25px;
-      color: #d3b5ff;
-      background: linear-gradient(145deg, rgba(164, 109, 255, .16), rgba(120, 67, 214, .04));
-      box-shadow: inset 0 1px rgba(255,255,255,.05);
-    }
-
-    .welcome-icon svg {
-      width: 37px;
-      height: 37px;
     }
 
     /* الإحصائيات */
@@ -278,19 +234,26 @@
     .stats {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-      margin-bottom: 25px;
+      gap: 16px;
+      margin-bottom: 24px;
+      animation: fadeUp .55s ease both;
     }
 
     .stat-card {
-      min-width: 0;
       position: relative;
       overflow: hidden;
-      padding: 21px;
-      border: 1px solid var(--border);
+      min-width: 0;
+      padding: 22px;
       border-radius: var(--radius);
-      background: linear-gradient(145deg, rgba(30, 24, 44, .96), rgba(17, 14, 26, .96));
-      box-shadow: 0 12px 30px rgba(0, 0, 0, .13);
+      border: 1px solid var(--border);
+      background: linear-gradient(145deg, rgba(27,27,43,.96), rgba(20,20,32,.96));
+      box-shadow: var(--shadow);
+      transition: transform .25s ease, border-color .25s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(167,139,250,.35);
     }
 
     .stat-card::after {
@@ -298,11 +261,10 @@
       position: absolute;
       width: 100px;
       height: 100px;
-      top: -55px;
       left: -35px;
+      bottom: -45px;
       border-radius: 50%;
-      background: rgba(169, 112, 255, .12);
-      filter: blur(25px);
+      background: rgba(167,139,250,.06);
       pointer-events: none;
     }
 
@@ -310,31 +272,25 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 18px;
+      gap: 10px;
+      margin-bottom: 15px;
     }
 
-    .stat-label {
-      color: #b5abc6;
-      font-size: 12px;
-      line-height: 1.8;
+    .stat-title {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
     }
 
     .stat-icon {
       width: 40px;
       height: 40px;
-      flex: 0 0 40px;
+      flex-shrink: 0;
       display: grid;
       place-items: center;
-      border: 1px solid rgba(169, 112, 255, .17);
-      border-radius: 14px;
-      color: #c9a7ff;
-      background: rgba(169, 112, 255, .09);
-    }
-
-    .stat-icon svg {
-      width: 20px;
-      height: 20px;
+      border-radius: 13px;
+      font-size: 19px;
+      background: rgba(167,139,250,.12);
     }
 
     .stat-number {
@@ -345,261 +301,394 @@
     }
 
     .stat-note {
-      margin-top: 4px;
-      color: var(--muted);
-      font-size: 10px;
-    }
-
-    .new-stat .stat-icon {
-      color: #ff8ca7;
-      background: rgba(255, 65, 108, .08);
-      border-color: rgba(255, 65, 108, .16);
-    }
-
-    .new-stat .stat-number {
-      color: #ff8ca7;
-    }
-
-    .status-stat .stat-icon {
-      color: var(--green);
-      background: rgba(96, 230, 176, .08);
-      border-color: rgba(96, 230, 176, .15);
-    }
-
-    .status-stat .stat-number {
-      color: var(--green);
-    }
-
-    /* تسجيل الدخول */
-
-    .panel {
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      background: linear-gradient(145deg, rgba(22, 18, 33, .96), rgba(16, 13, 24, .96));
-      box-shadow: 0 18px 45px rgba(0, 0, 0, .15);
-    }
-
-    .login-panel {
-      max-width: 460px;
-      margin: 35px auto;
-      padding: 28px;
-    }
-
-    .login-heading {
-      margin: 0;
-      font-size: 22px;
-      font-weight: 800;
-    }
-
-    .login-description {
-      margin: 8px 0 23px;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.9;
-    }
-
-    label {
-      display: block;
-      margin: 15px 0 8px;
-      color: #ded5ec;
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    input {
-      width: 100%;
-      min-width: 0;
-      min-height: 50px;
-      padding: 13px 15px;
-      border: 1px solid rgba(195, 157, 255, .15);
-      border-radius: 14px;
-      color: var(--text);
-      background: #0e0b16;
-      outline: none;
-      font-size: 14px;
-      transition: border-color .2s, box-shadow .2s;
-    }
-
-    input::placeholder {
-      color: #6f667e;
-    }
-
-    input:focus {
-      border-color: rgba(169, 112, 255, .75);
-      box-shadow: 0 0 0 4px rgba(169, 112, 255, .08);
-    }
-
-    button {
-      border: 0;
-      font-weight: 800;
-      cursor: pointer;
-    }
-
-    .primary-button {
-      color: white;
-      background: linear-gradient(115deg, #ac76ff, #7540cf);
-      box-shadow: 0 8px 24px rgba(137, 79, 221, .2);
-      transition: filter .2s, transform .2s;
-    }
-
-    .primary-button:hover {
-      filter: brightness(1.1);
-    }
-
-    .primary-button:active {
-      transform: scale(.985);
-    }
-
-    .login-button {
-      width: 100%;
-      min-height: 52px;
-      margin-top: 22px;
-      border-radius: 14px;
-      font-size: 14px;
-    }
-
-    /* منطقة الرسائل */
-
-    .messages-panel {
-      overflow: hidden;
-    }
-
-    .panel-heading {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 14px;
-      padding: 23px 24px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .heading-title {
-      margin: 0;
-      font-size: 18px;
-      font-weight: 800;
-    }
-
-    .heading-subtitle {
       margin-top: 5px;
       color: var(--muted);
       font-size: 11px;
     }
 
-    .count-pill {
+    .status-stat .stat-icon {
+      background: rgba(74,222,128,.12);
+    }
+
+    .status-value {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      min-height: 32px;
-      padding: 5px 12px;
-      border: 1px solid rgba(169, 112, 255, .2);
-      border-radius: 99px;
-      color: #d2b4ff;
-      background: rgba(169, 112, 255, .08);
-      font-size: 11px;
-      white-space: nowrap;
+      gap: 8px;
+      font-size: 19px;
+      font-weight: 800;
     }
 
-    .messages-tools {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 17px 22px;
-      border-bottom: 1px solid rgba(195, 157, 255, .09);
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--green);
     }
 
-    .search-wrap {
-      flex: 1;
-      min-width: 0;
-      position: relative;
+    /* اللوحات */
+
+    .panel {
+      padding: 25px;
+      margin-bottom: 22px;
+      background: rgba(21,21,34,.94);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
     }
 
-    .search-wrap svg {
-      position: absolute;
-      right: 14px;
-      top: 50%;
-      width: 19px;
-      height: 19px;
-      color: #827591;
-      transform: translateY(-50%);
-      pointer-events: none;
+    .panel-heading {
+      margin-bottom: 22px;
     }
 
-    .search-wrap input {
-      padding-right: 43px;
-      min-height: 46px;
-      font-size: 12px;
+    .panel-heading h2 {
+      margin: 0 0 5px;
+      font-size: 21px;
+      font-weight: 800;
     }
 
-    .tool-button {
-      min-height: 46px;
-      padding: 0 15px;
+    .panel-heading p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    /* تسجيل الدخول */
+
+    .login-panel {
+      width: min(480px, 100%);
+      margin: 35px auto;
+      padding: 30px;
+      animation: fadeUp .45s ease both;
+    }
+
+    .login-icon {
+      width: 64px;
+      height: 64px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 18px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #a78bfa, #6d28d9);
+      box-shadow: 0 8px 25px rgba(124,58,237,.25);
+      font-size: 29px;
+    }
+
+    .login-panel .panel-heading {
+      text-align: center;
+    }
+
+    .field {
+      margin-bottom: 17px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .input {
+      display: block;
+      width: 100%;
+      min-height: 50px;
+      padding: 12px 15px;
+      color: var(--text);
+      background: #10101a;
       border: 1px solid var(--border);
       border-radius: 13px;
-      color: #e8def8;
-      background: #211a30;
-      font-size: 12px;
-      white-space: nowrap;
-      transition: background .2s, transform .2s;
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
     }
 
-    .tool-button:active {
-      transform: scale(.97);
+    .input::placeholder {
+      color: #77738d;
     }
 
-    .tool-button svg {
-      width: 17px;
-      height: 17px;
-      vertical-align: middle;
-      margin-left: 5px;
+    .input:focus {
+      border-color: var(--purple);
+      box-shadow: 0 0 0 3px rgba(167,139,250,.1);
+    }
+
+    .primary-button,
+    .secondary-button,
+    .danger-button {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 10px 17px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      font-weight: 700;
+      font-size: 13px;
+      transition: .2s ease;
+    }
+
+    .primary-button {
+      color: white;
+      background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+      box-shadow: 0 6px 18px rgba(124,58,237,.2);
+    }
+
+    .primary-button:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+    }
+
+    .secondary-button {
+      color: var(--text);
+      background: var(--panel-2);
+      border-color: var(--border);
+    }
+
+    .secondary-button:hover {
+      border-color: var(--purple);
     }
 
     .danger-button {
-      color: #ffb1c0;
-      background: rgba(255, 65, 108, .08);
-      border-color: rgba(255, 65, 108, .17);
+      color: #fecdd3;
+      background: rgba(251,113,133,.1);
+      border-color: rgba(251,113,133,.18);
     }
 
-    .status {
-      margin: 0;
-      padding: 0 22px;
-      color: #c1b2d7;
+    .danger-button:hover {
+      background: rgba(251,113,133,.18);
+    }
+
+    .full-width {
+      width: 100%;
+    }
+
+    .form-status {
+      margin-top: 14px;
+      padding: 11px 13px;
+      border-radius: 11px;
       font-size: 12px;
-      line-height: 1.9;
+      line-height: 1.8;
       overflow-wrap: anywhere;
     }
 
-    #dashboardStatus:not(:empty) {
-      padding-top: 12px;
+    .form-status:empty {
+      display: none;
     }
 
-    #loginStatus:not(:empty) {
-      margin-top: 12px;
+    .form-status.error {
+      color: #fecdd3;
+      background: rgba(251,113,133,.09);
+      border: 1px solid rgba(251,113,133,.16);
+    }
+
+    .form-status.success {
+      color: #bbf7d0;
+      background: rgba(74,222,128,.08);
+      border: 1px solid rgba(74,222,128,.16);
+    }
+
+    .form-status.info {
+      color: #ddd6fe;
+      background: rgba(167,139,250,.08);
+      border: 1px solid rgba(167,139,250,.16);
+    }
+
+    /* صندوق الرسائل */
+
+    .messages-panel {
+      animation: fadeUp .6s ease both;
+    }
+
+    .messages-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 180px;
+    }
+
+    .toolbar-buttons {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 9px;
     }
 
     .messages-list {
-      padding: 5px 22px 22px;
+      display: grid;
+      gap: 14px;
     }
 
-    .message {
-      position: relative;
-      overflow: hidden;
-      margin-top: 15px;
+    .message-card {
       padding: 19px;
-      border: 1px solid rgba(195, 157, 255, .12);
-      border-radius: 18px;
-      background: linear-gradient(145deg, rgba(34, 27, 48, .68), rgba(19, 16, 28, .85));
+      border-radius: 16px;
+      background: linear-gradient(145deg, #1a1a2a, #171724);
+      border: 1px solid var(--border);
       transition: border-color .2s, transform .2s;
-      animation: messageIn .35s ease both;
+      animation: fadeUp .3s ease both;
     }
 
-    .message:hover {
-      border-color: rgba(169, 112, 255, .3);
+    .message-card:hover {
+      border-color: rgba(167,139,250,.25);
+      transform: translateY(-2px);
     }
 
-    @keyframes messageIn {
+    .message-card.is-unread {
+      border-color: rgba(167,139,250,.42);
+      box-shadow: inset -3px 0 0 var(--purple);
+    }
+
+    .message-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .message-person {
+      min-width: 0;
+    }
+
+    .message-person h3 {
+      margin: 0 0 4px;
+      font-size: 15px;
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }
+
+    .message-recipient {
+      color: var(--purple);
+      font-size: 12px;
+      overflow-wrap: anywhere;
+    }
+
+    .message-date {
+      color: var(--muted);
+      font-size: 11px;
+      direction: ltr;
+      text-align: left;
+    }
+
+    .message-body {
+      padding: 15px;
+      color: #e9e5f7;
+      background: rgba(0,0,0,.15);
+      border: 1px solid rgba(255,255,255,.04);
+      border-radius: 12px;
+      font-size: 14px;
+      line-height: 2;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .message-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .message-actions button {
+      min-height: 37px;
+      padding: 7px 12px;
+      font-size: 11px;
+    }
+
+    .empty-state {
+      padding: 45px 20px;
+      text-align: center;
+      border: 1px dashed rgba(255,255,255,.13);
+      border-radius: 16px;
+      background: rgba(255,255,255,.015);
+    }
+
+    .empty-icon {
+      margin-bottom: 12px;
+      font-size: 38px;
+      opacity: .8;
+    }
+
+    .empty-state h3 {
+      margin: 0 0 7px;
+      font-size: 16px;
+    }
+
+    .empty-state p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.9;
+    }
+
+    /* إشعار الرسائل الجديدة */
+
+    .toast {
+      position: fixed;
+      z-index: 9999;
+      left: 20px;
+      bottom: 20px;
+      width: min(360px, calc(100% - 40px));
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px;
+      color: var(--text);
+      background: #201b34;
+      border: 1px solid rgba(167,139,250,.35);
+      border-radius: 16px;
+      box-shadow: 0 15px 45px rgba(0,0,0,.4);
+      animation: toastIn .3s ease both;
+    }
+
+    .toast-icon {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: rgba(167,139,250,.14);
+      font-size: 20px;
+    }
+
+    .toast strong {
+      display: block;
+      margin-bottom: 3px;
+      font-size: 13px;
+    }
+
+    .toast p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.7;
+    }
+
+    /* التذييل */
+
+    .footer {
+      padding: 15px 10px 5px;
+      color: #77738d;
+      text-align: center;
+      font-size: 11px;
+      line-height: 1.8;
+    }
+
+    /* الحركات */
+
+    @keyframes fadeUp {
       from {
         opacity: 0;
-        transform: translateY(8px);
+        transform: translateY(12px);
       }
       to {
         opacity: 1;
@@ -607,130 +696,66 @@
       }
     }
 
-    .message p {
-      line-height: 1.9;
-      overflow-wrap: anywhere;
-      white-space: pre-wrap;
-    }
-
-    .message .meta {
-      color: #a99bbd;
-      font-size: 11px;
-      line-height: 2;
-      overflow-wrap: anywhere;
-    }
-
-    .message .message-text {
-      padding: 14px;
-      border: 1px solid rgba(195, 157, 255, .08);
-      border-radius: 13px;
-      background: rgba(5, 4, 10, .35);
-      line-height: 2;
-      overflow-wrap: anywhere;
-      white-space: pre-wrap;
-    }
-
-    .message button {
-      min-height: 42px;
-      margin-top: 10px;
-      padding: 9px 15px;
-      border-radius: 12px;
-      font-size: 12px;
-    }
-
-    .empty {
-      padding: 45px 15px;
-      color: var(--muted);
-      text-align: center;
-      font-size: 13px;
-      line-height: 2;
-    }
-
-    .empty-icon {
-      width: 58px;
-      height: 58px;
-      display: grid;
-      place-items: center;
-      margin: 0 auto 15px;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      color: #c6a4ff;
-      background: rgba(169, 112, 255, .08);
-      font-size: 25px;
-    }
-
-    .footer {
-      padding: 25px 10px 10px;
-      color: #655c73;
-      text-align: center;
-      font-size: 10px;
-      line-height: 2;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    /* إشعار الجرس */
-
-    .toast {
-      position: fixed;
-      z-index: 1000;
-      right: 16px;
-      bottom: calc(16px + env(safe-area-inset-bottom));
-      width: min(360px, calc(100% - 32px));
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 15px;
-      border: 1px solid rgba(169, 112, 255, .35);
-      border-radius: 18px;
-      background: rgba(25, 19, 38, .97);
-      box-shadow: 0 15px 50px rgba(0, 0, 0, .45);
-      backdrop-filter: blur(18px);
-      animation: toastIn .3s ease both;
-    }
-
-    .toast-icon {
-      width: 43px;
-      height: 43px;
-      flex: 0 0 43px;
-      display: grid;
-      place-items: center;
-      border-radius: 14px;
-      background: rgba(169, 112, 255, .13);
-      font-size: 21px;
-    }
-
-    .toast-title {
-      font-size: 12px;
-      font-weight: 800;
-    }
-
-    .toast-text {
-      margin-top: 4px;
-      color: var(--muted);
-      font-size: 11px;
-      line-height: 1.8;
-    }
-
     @keyframes toastIn {
-      from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
-    /* الهاتف */
+    /* الشاشات المتوسطة */
 
-    @media (max-width: 600px) {
+    @media (max-width: 760px) {
+      .app {
+        padding: 14px;
+      }
+
+      .topbar {
+        padding: 14px;
+      }
+
+      .stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .status-stat {
+        grid-column: 1 / -1;
+      }
+
+      .stat-card {
+        padding: 17px;
+      }
+
+      .welcome {
+        padding: 24px;
+      }
+
+      .panel {
+        padding: 20px;
+      }
+
+      .login-panel {
+        margin: 25px auto;
+      }
+    }
+
+    /* الهواتف */
+
+    @media (max-width: 480px) {
       .app {
         padding: 10px;
       }
 
       .topbar {
-        min-height: 67px;
-        padding: 11px;
         gap: 8px;
-        border-radius: 19px;
+        padding: 12px;
+        margin-bottom: 17px;
+        border-radius: 16px;
       }
 
       .brand {
@@ -740,17 +765,16 @@
       .brand-logo {
         width: 40px;
         height: 40px;
-        flex-basis: 40px;
-        border-radius: 13px;
-        font-size: 20px;
+        border-radius: 12px;
+        font-size: 19px;
       }
 
-      .brand-title {
-        font-size: 13px;
+      .brand h1 {
+        font-size: 14px;
       }
 
-      .brand-subtitle {
-        font-size: 9px;
+      .brand p {
+        font-size: 10px;
       }
 
       .top-actions {
@@ -758,197 +782,159 @@
       }
 
       .online-label {
-        display: none;
+        font-size: 0;
+        gap: 0;
+      }
+
+      .online-dot {
+        width: 8px;
+        height: 8px;
       }
 
       .icon-button {
-        width: 42px;
-        height: 42px;
-        border-radius: 13px;
+        width: 39px;
+        height: 39px;
+        border-radius: 12px;
+      }
+
+      .dashboard-actions {
+        margin-bottom: 13px;
       }
 
       .welcome {
-        padding: 27px 4px 21px;
-        gap: 8px;
-      }
-
-      .welcome h1 {
-        font-size: 23px;
-      }
-
-      .welcome p {
-        max-width: 270px;
-        font-size: 11px;
-      }
-
-      .welcome-icon {
-        width: 53px;
-        height: 53px;
-        flex-basis: 53px;
+        padding: 20px;
+        margin-bottom: 14px;
         border-radius: 18px;
       }
 
-      .welcome-icon svg {
-        width: 27px;
-        height: 27px;
+      .welcome h2 {
+        font-size: 22px;
       }
 
-      .eyebrow {
-        font-size: 10px;
+      .welcome p {
+        font-size: 12px;
       }
 
       .stats {
-        gap: 8px;
-        margin-bottom: 17px;
+        gap: 10px;
+        margin-bottom: 15px;
       }
 
       .stat-card {
-        padding: 12px 10px;
-        border-radius: 17px;
+        padding: 14px;
+        border-radius: 16px;
       }
 
       .stat-top {
         align-items: flex-start;
-        flex-direction: column-reverse;
-        gap: 8px;
         margin-bottom: 10px;
+      }
+
+      .stat-title {
+        font-size: 11px;
+        line-height: 1.7;
       }
 
       .stat-icon {
         width: 32px;
         height: 32px;
-        flex-basis: 32px;
-        border-radius: 11px;
-      }
-
-      .stat-icon svg {
-        width: 17px;
-        height: 17px;
-      }
-
-      .stat-label {
-        font-size: 10px;
+        border-radius: 10px;
+        font-size: 16px;
       }
 
       .stat-number {
-        font-size: 25px;
+        font-size: 26px;
       }
 
       .stat-note {
-        font-size: 9px;
+        font-size: 10px;
         line-height: 1.7;
       }
 
+      .status-value {
+        font-size: 16px;
+      }
+
+      .panel {
+        padding: 16px;
+        margin-bottom: 15px;
+        border-radius: 17px;
+      }
+
+      .panel-heading h2 {
+        font-size: 19px;
+      }
+
       .login-panel {
+        padding: 22px 18px;
         margin: 20px auto;
-        padding: 21px 17px;
       }
 
-      .panel-heading {
-        padding: 18px 15px;
-        align-items: flex-start;
+      .messages-toolbar {
+        align-items: stretch;
       }
 
-      .heading-title {
-        font-size: 15px;
+      .search-box {
+        min-width: 100%;
       }
 
-      .heading-subtitle {
-        max-width: 210px;
-        font-size: 10px;
-      }
-
-      .count-pill {
-        min-height: 29px;
-        padding: 4px 9px;
-        font-size: 10px;
-      }
-
-      .messages-tools {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 8px;
-        padding: 13px;
-      }
-
-      .search-wrap {
-        grid-column: 1 / -1;
-      }
-
-      .search-wrap input {
-        min-height: 47px;
-        font-size: 12px;
-      }
-
-      .tool-button {
+      .toolbar-buttons {
         width: 100%;
-        min-height: 46px;
-        padding: 0 8px;
-        font-size: 11px;
       }
 
-      .messages-list {
-        padding: 3px 11px 13px;
+      .toolbar-buttons button {
+        flex: 1;
       }
 
-      .message {
-        margin-top: 11px;
+      .message-card {
         padding: 14px;
-        border-radius: 15px;
       }
 
-      .message p {
+      .message-body {
+        padding: 12px;
         font-size: 13px;
       }
 
-      .message .message-text {
-        padding: 11px;
-        font-size: 13px;
-      }
-
-      .status {
-        padding-right: 14px;
-        padding-left: 14px;
-      }
-
-      .footer {
-        padding-top: 20px;
+      .toast {
+        left: 12px;
+        bottom: 12px;
+        width: calc(100% - 24px);
       }
     }
 
     @media (max-width: 350px) {
-      .brand-subtitle {
-        display: none;
-      }
-
       .stats {
         grid-template-columns: 1fr;
       }
 
-      .stat-top {
-        flex-direction: row;
-        align-items: center;
-        margin-bottom: 8px;
+      .status-stat {
+        grid-column: auto;
       }
 
       .stat-card {
-        padding: 15px;
+        padding: 16px;
+      }
+
+      .stat-top {
+        align-items: center;
       }
 
       .stat-number {
-        font-size: 27px;
+        font-size: 29px;
       }
 
-      .welcome-icon {
+      .brand p {
         display: none;
       }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
         animation-duration: .01ms !important;
         animation-iteration-count: 1 !important;
-        scroll-behavior: auto !important;
         transition-duration: .01ms !important;
       }
     }
@@ -958,273 +944,195 @@
 <body>
   <main class="app">
 
+    <!-- الشريط العلوي: يبقى ظاهرًا قبل تسجيل الدخول -->
     <header class="topbar">
       <div class="brand">
-        <div class="brand-logo" aria-hidden="true">💌</div>
+        <div class="brand-logo" aria-hidden="true">م</div>
         <div>
-          <div class="brand-title">رسالة من مجهول</div>
-          <div class="brand-subtitle">لوحة الإدارة والتحكم</div>
+          <h1>رسالة من مجهول</h1>
+          <p>لوحة الإدارة والتحكم</p>
         </div>
-      </div>
-
-      <div class="top-actions">
-        <div class="online-label">
-          <span class="online-dot"></span>
-          مساحة الإدارة
-        </div>
-
-        <button
-          class="icon-button bell-button"
-          id="notificationBell"
-          type="button"
-          aria-label="إشعارات الرسائل الجديدة"
-          title="إشعارات الرسائل"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-               stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
-               aria-hidden="true">
-            <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
-            <path d="M10 21h4"/>
-          </svg>
-          <span class="bell-badge" id="notificationBadge">0</span>
-        </button>
       </div>
     </header>
 
-    <section class="welcome">
-      <div>
-        <div class="eyebrow">
-          <span class="eyebrow-mark"></span>
-          مركز التحكم الخاص F90 😘
-        </div>
-        <h1>أهلًا بك في لوحة الإدارة</h1>
-        <p>تابع الرسائل الواردة وأدرها من مكان واحد بكل سهولة أف تسعين لديكم لا خوف عليكم</p>
-      </div>
-
-      <div class="welcome-icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-             stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8A8.5 8.5 0 0 1 8.7 3.9a8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8z"/>
-          <path d="M8 12h8M8 8.5h5"/>
-        </svg>
-      </div>
-    </section>
-
-    <section class="stats" aria-label="إحصائيات الرسائل">
-      <article class="stat-card">
-        <div class="stat-top">
-          <span class="stat-label">إجمالي الرسائل</span>
-          <span class="stat-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                 stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/>
-              <path d="m22 7-10 7L2 7"/>
-            </svg>
-          </span>
-        </div>
-        <div class="stat-number" id="totalMessages">—</div>
-        <div class="stat-note">جميع الرسائل المحفوظة</div>
-      </article>
-
-      <article class="stat-card new-stat">
-        <div class="stat-top">
-          <span class="stat-label">رسائل جديدة</span>
-          <span class="stat-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                 stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
-              <path d="M10 21h4"/>
-            </svg>
-          </span>
-        </div>
-        <div class="stat-number" id="newMessagesCount">0</div>
-        <div class="stat-note">بانتظار متابعة المدير</div>
-      </article>
-
-      <article class="stat-card status-stat">
-        <div class="stat-top">
-          <span class="stat-label">حالة اللوحة</span>
-          <span class="stat-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                 stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z"/>
-              <path d="m9 12 2 2 4-4"/>
-            </svg>
-          </span>
-        </div>
-        <div class="stat-number" id="systemStatus">جاهزة</div>
-        <div class="stat-note">لوحة إدارة الرسائل</div>
-      </article>
-    </section>
-
+    <!-- تسجيل الدخول يظهر أولًا -->
     <section class="panel login-panel" id="loginCard">
-      <h2 class="login-heading">تسجيل دخول المدير</h2>
-      <p class="login-description">
-        سجّل الدخول بحساب الإدارة للوصول إلى الرسائل الواردة.
-      </p>
+      <div class="login-icon" aria-hidden="true">🔐</div>
+
+      <div class="panel-heading">
+        <h2>تسجيل دخول المدير</h2>
+        <p>سجّل الدخول باستخدام حساب الإدارة المصرّح له.F90</p>
+      </div>
 
       <form id="loginForm">
-        <label for="email">البريد الإلكتروني</label>
-        <input
-          id="email"
-          type="email"
-          autocomplete="username"
-          placeholder="أدخل بريد المدير"
-          required
-        >
-
-        <label for="password">كلمة المرور</label>
-        <input
-          id="password"
-          type="password"
-          autocomplete="current-password"
-          placeholder="أدخل كلمة المرور"
-          required
-        >
-
-        <button class="primary-button login-button" id="loginButton" type="submit">
-          تسجيل الدخول إلى اللوحة
-        </button>
-      </form>
-
-      <div class="status" id="loginStatus" role="status" aria-live="polite"></div>
-    </section>
-
-    <section id="dashboard" class="hidden">
-      <section class="panel messages-panel">
-
-        <div class="panel-heading">
-          <div>
-            <h2 class="heading-title">صندوق الرسائل</h2>
-            <div class="heading-subtitle">عرض الرسائل والبحث فيها وإدارتها</div>
-          </div>
-
-          <span class="count-pill" id="messageCount">عدد الرسائل: 0</span>
+        <div class="field">
+          <label for="loginEmail">البريد الإلكتروني</label>
+          <input
+            class="input"
+            id="loginEmail"
+            type="email"
+            placeholder="أدخل البريد الإلكتروني"
+            autocomplete="username"
+            required
+          >
         </div>
 
-        <div class="messages-tools">
-          <div class="search-wrap">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                 stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
-                 aria-hidden="true">
-              <circle cx="11" cy="11" r="7"/>
-              <path d="m20 20-4-4"/>
-            </svg>
+        <div class="field">
+          <label for="loginPassword">كلمة المرور</label>
+          <input
+            class="input"
+            id="loginPassword"
+            type="password"
+            placeholder="أدخل كلمة المرور"
+            autocomplete="current-password"
+            required
+          >
+        </div>
 
+        <button class="primary-button full-width" id="loginButton" type="submit">
+          تسجيل الدخول
+        </button>
+
+        <div class="form-status" id="loginStatus" role="status" aria-live="polite"></div>
+      </form>
+    </section>
+
+    <!-- لوحة التحكم بالكامل مخفية إلى حين تسجيل الدخول -->
+    <section id="dashboard" class="hidden">
+
+      <!-- أدوات اللوحة والجرس لا تظهر قبل تسجيل الدخول -->
+      <div class="dashboard-actions">
+        <div class="top-actions">
+          <div class="online-label">
+            <span class="online-dot"></span>
+            لوحة الإدارة
+          </div>
+
+          <button
+            class="icon-button"
+            id="notificationBell"
+            type="button"
+            aria-label="الإشعارات"
+            title="الإشعارات"
+          >
+            🔔
+            <span class="notification-badge hidden" id="notificationBadge">0</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- الترحيب يظهر بعد تسجيل الدخول -->
+      <section class="welcome">
+        <h2>مرحبًا بك في لوحة الإدارة 👋</h2>
+        <p>
+          من هنا يمكنك متابعة الرسائل الواردة، والبحث عنها، وإدارة الرسائل الجديدة
+          من مكان واحد.F90 
+        </p>
+      </section>
+
+      <!-- الإحصائيات تظهر بعد تسجيل الدخول فقط -->
+      <section class="stats" aria-label="إحصائيات الرسائل">
+
+        <article class="stat-card">
+          <div class="stat-top">
+            <div class="stat-title">إجمالي الرسائل</div>
+            <div class="stat-icon" aria-hidden="true">✉️</div>
+          </div>
+          <div class="stat-number" id="totalMessages">0</div>
+          <div class="stat-note">عدد الرسائل المسجلة</div>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-top">
+            <div class="stat-title">الرسائل الجديدة</div>
+            <div class="stat-icon" aria-hidden="true">🔔</div>
+          </div>
+          <div class="stat-number" id="newMessagesCount">0</div>
+          <div class="stat-note">رسائل لم تتم قراءتها</div>
+        </article>
+
+        <article class="stat-card status-stat">
+          <div class="stat-top">
+            <div class="stat-title">حالة النظام</div>
+            <div class="stat-icon" aria-hidden="true">🟢</div>
+          </div>
+          <div class="status-value">
+            <span class="status-dot"></span>
+            <span id="systemStatus">متصل</span>
+          </div>
+          <div class="stat-note">حالة الاتصال بلوحة الرسائل</div>
+        </article>
+
+      </section>
+
+      <!-- صندوق الرسائل -->
+      <section class="panel messages-panel">
+        <div class="panel-heading">
+          <h2>صندوق الرسائل</h2>
+          <p>يمكنك استعراض الرسائل الواردة والبحث فيها وحذف الرسائل عند الحاجة.</p>
+        </div>
+
+        <div class="messages-toolbar">
+          <div class="search-box">
             <input
+              class="input"
               id="searchInput"
               type="search"
-              placeholder="ابحث باسم المرسل أو المستلم أو الرسالة..."
+              placeholder="ابحث باسم المرسل أو المستلم أو نص الرسالة..."
               aria-label="البحث في الرسائل"
             >
           </div>
 
-          <button class="tool-button" id="refreshButton" type="button">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                 stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
-                 aria-hidden="true">
-              <path d="M20 7v5h-5"/>
-              <path d="M4 17v-5h5"/>
-              <path d="M5.6 9A7 7 0 0 1 17.5 6L20 12"/>
-              <path d="M18.4 15A7 7 0 0 1 6.5 18L4 12"/>
-            </svg>
-            تحديث الرسائل
-          </button>
+          <div class="toolbar-buttons">
+            <button class="secondary-button" id="refreshButton" type="button">
+              ↻ تحديث
+            </button>
 
-          <button class="tool-button danger-button" id="logoutButton" type="button">
-            تسجيل الخروج
-          </button>
-        </div>
-
-        <div class="status" id="dashboardStatus" role="status" aria-live="polite"></div>
-
-        <div id="messagesList" class="messages-list">
-          <div class="empty">
-            <div class="empty-icon">💌</div>
-            ستظهر الرسائل هنا بعد تسجيل الدخول.
+            <button class="danger-button" id="logoutButton" type="button">
+              تسجيل الخروج
+            </button>
           </div>
         </div>
 
+        <div
+          class="form-status"
+          id="dashboardStatus"
+          role="status"
+          aria-live="polite"
+        ></div>
+
+        <div class="messages-list" id="messagesList">
+          <div class="empty-state">
+            <div class="empty-icon" aria-hidden="true">✉️</div>
+            <h3>جاري تحميل الرسائل</h3>
+            <p>يرجى الانتظار قليلًا.</p>
+          </div>
+        </div>
       </section>
+
     </section>
 
     <footer class="footer">
-      رسالة من مجهول · لوحة الإدارة الخاصة
+      رسالة من مجهول · لوحة الإدارة
     </footer>
+
   </main>
 
-  <div class="toast hidden" id="notificationToast" role="status" aria-live="polite">
-    <div class="toast-icon">🔔</div>
+  <!-- إشعار الرسائل الجديدة -->
+  <div
+    class="toast hidden"
+    id="notificationToast"
+    role="status"
+    aria-live="polite"
+  >
+    <div class="toast-icon" aria-hidden="true">🔔</div>
     <div>
-      <div class="toast-title">وصلت رسالة جديدة</div>
-      <div class="toast-text" id="notificationToastText">توجد رسالة جديدة في صندوق الوارد.</div>
+      <strong>رسالة جديدة</strong>
+      <p id="notificationToastText">وصلتك رسالة جديدة.</p>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="admin.js"></script>
-
-    /*
-      مزامنة شكل الإحصائيات مع عدد الرسائل الذي يعرضه admin.js.
-      لا تستبدل هذه الإضافة نظام تسجيل الدخول أو جلب الرسائل.
-    */
-    (() => {
-      const countElement = document.getElementById("messageCount");
-      const totalElement = document.getElementById("totalMessages");
-      const statusElement = document.getElementById("systemStatus");
-
-      function syncStats() {
-        const text = countElement ? countElement.textContent : "";
-        const match = text.match(/\d+/);
-
-        if (match) {
-          totalElement.textContent = Number(match[0]).toLocaleString("ar");
-        }
-
-        const dashboard = document.getElementById("dashboard");
-        const loggedIn = dashboard && !dashboard.classList.contains("hidden");
-
-        statusElement.textContent = loggedIn ? "نشطة" : "جاهزة";
-      }
-
-      if (countElement) {
-        new MutationObserver(syncStats).observe(countElement, {
-          childList: true,
-          subtree: true,
-          characterData: true
-        });
-      }
-
-      const dashboard = document.getElementById("dashboard");
-      if (dashboard) {
-        new MutationObserver(syncStats).observe(dashboard, {
-          attributes: true,
-          attributeFilter: ["class"]
-        });
-      }
-
-      syncStats();
-    })();
-
-    /*
-      زر الجرس ينقلك مباشرة إلى صندوق الرسائل.
-      العدّاد الفعلي للرسائل الجديدة يحتاج ربطه مع admin.js.
-    */
-    document.getElementById("notificationBell").addEventListener("click", () => {
-      const dashboard = document.getElementById("dashboard");
-
-      if (dashboard && !dashboard.classList.contains("hidden")) {
-        document.querySelector(".messages-panel").scrollIntoView({
-          behavior: "smooth",
-          block: "start"
-        });
-      } else {
-        document.getElementById("loginCard").scrollIntoView({
-          behavior: "smooth",
-          block: "center"
-        });
-      }
-    });
-  </script>
 </body>
-</html>
+  </html>
